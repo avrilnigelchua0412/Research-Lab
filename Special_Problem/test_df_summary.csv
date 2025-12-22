@@ -1,59 +1,52 @@
-File,Thyrocytes_Count,Clusters_Count,Cluster_Group
-LS-138.jpg,50,1,low
-LS-009.jpeg,99,5,medium
-LS-213.jpeg,14,1,low
-LS-106.jpg,66,1,low
-LS-518.jpg,38,2,low
-LS-523.jpg,311,2,low
-LS-217.jpeg,126,7,medium
-LS-524.jpg,630,5,medium
-LS-303.jpg,83,3,low
-LS-109.jpg,150,1,low
-LS-210.jpeg,94,1,low
-LS-622.jpg,56,1,low
-LS-480.jpg,55,2,low
-LS-448.jpg,40,2,low
-LS-069.jpeg,13,1,low
-LS-037.jpg,35,1,low
-LS-403.jpg,99,4,low
-LS-092.jpg,17,1,low
-LS-136.jpg,404,2,low
-LS-481.jpg,31,1,low
-LS-453.jpg,68,2,low
-LS-567.jpg,29,2,low
-LS-032.jpeg,427,5,medium
-LS-074.jpeg,163,6,medium
-LS-495.jpg,63,1,low
-LS-132.jpg,93,1,low
-LS-236.jpg,42,2,low
-LS-380.jpg,9,1,low
-LS-317.jpg,586,19,high
-LS-547.jpg,275,4,low
-LS-595.jpg,32,1,low
-LS-334.jpg,85,2,low
-LS-491.jpg,77,1,low
-LS-137.jpg,217,1,low
-LS-159.jpg,122,1,low
-LS-355.jpg,41,1,low
-LS-116.jpg,421,7,medium
-LS-281.jpg,526,31,high
-LS-025.jpg,171,2,low
-LS-341.jpg,39,1,low
-LS-358.jpg,48,2,low
-LS-018.jpeg,124,1,low
-LS-608.jpg,81,3,low
-LS-417.jpg,21,1,low
-LS-049.jpeg,130,2,low
-LS-441.jpg,1401,1,low
-LS-178.jpg,247,2,low
-LS-429.jpg,40,1,low
-LS-113.jpg,376,3,low
-LS-349.jpg,11,1,low
-LS-125.jpg,294,1,low
-LS-378.jpg,15,2,low
-LS-248.jpg,105,3,low
-LS-521.jpg,45,4,low
-LS-516.jpg,88,2,low
-LS-552.jpg,325,2,low
-LS-470.jpg,231,9,medium
-LS-537.jpg,160,8,medium
+File,Thyrocytes_Count,Classification
+LS-123.jpg,20,LEVEL IV
+LS-459.jpg,124,LEVEL II
+LS-254.jpg,31,LEVEL III
+LS-073.jpeg,13,LEVEL II
+LS-267.jpg,192,LEVEL V
+LS-037.jpg,35,LEVEL IV
+LS-262.jpg,119,LEVEL V
+LS-554.jpg,446,LEVEL IV
+LS-249.jpg,167,LEVEL III
+LS-457.jpg,88,LEVEL III
+LS-310.jpg,161,LEVEL I
+LS-510.jpg,57,LEVEL III
+LS-437.jpg,2343,LEVEL V
+LS-539.jpg,290,LEVEL II
+LS-640.jpg,64,LEVEL III
+LS-526.jpg,683,LEVEL IV
+LS-367.jpg,8,LEVEL I
+LS-186.jpg,22,LEVEL II
+LS-553.jpg,534,LEVEL IV
+LS-087.jpeg,44,LEVEL IV
+LS-058.jpeg,64,LEVEL I
+LS-142.jpg,64,LEVEL V
+LS-511.jpg,74,LEVEL II
+LS-170.jpg,30,LEVEL III
+LS-622.jpg,56,LEVEL III
+LS-242.jpg,87,LEVEL II
+LS-343.jpg,17,LEVEL I
+LS-114.jpg,108,LEVEL III
+LS-632.jpg,71,LEVEL III
+LS-138.jpg,50,LEVEL V
+LS-140.jpg,194,LEVEL IV
+LS-341.jpg,39,LEVEL II
+LS-188.jpg,51,LEVEL I
+LS-333.jpg,178,LEVEL III
+LS-535.jpg,83,LEVEL III
+LS-325.jpg,65,LEVEL II
+LS-400.jpg,116,LEVEL V
+LS-127.jpg,91,LEVEL V
+LS-364.jpg,68,LEVEL IV
+LS-463.jpg,15,LEVEL III
+LS-407.jpg,23,LEVEL II
+LS-280.jpg,191,LEVEL V
+LS-113.jpg,376,LEVEL III
+LS-494.jpg,134,LEVEL IV
+LS-626.jpg,181,LEVEL IV
+LS-573.jpg,8,LEVEL I
+LS-308.jpg,115,LEVEL V
+LS-595.jpg,32,LEVEL IV
+LS-629.jpg,83,LEVEL IV
+LS-244.jpg,15,LEVEL II
+LS-606.jpg,74,LEVEL V

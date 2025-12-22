@@ -3,6 +3,8 @@ import pandas as pd
 import os
 
 class StaticVariable:
+    levels = pd.read_excel('/workspace/Special_Problem/FNAB ANNOTATIONS.xlsx', sheet_name='Classification')
+    summarized_levels = pd.read_csv('/workspace/Special_Problem/dataset_summary.csv')
     formats = ['.jpeg', '.jpg', '.png']
     data_path = '/workspace/Special_Problem/Data'
     tile_size = 512
@@ -104,11 +106,11 @@ class StaticVariable:
     def get_transform(cls):
         return cls.transform
     
-    @staticmethod
-    def cluster_group(x):
-        if x <= 4:
-            return "low"
-        elif x <= 10:
-            return "medium"
-        else:
-            return "high"
+    # @staticmethod
+    # def cluster_group(x):
+    #     if x <= 4:
+    #         return "low"
+    #     elif x <= 10:
+    #         return "medium"
+    #     else:
+    #         return "high"
