@@ -23,13 +23,30 @@ class Utils:
         return rows
     
     @staticmethod
-    def replace(original_string):
+    def replace(original_string, affixes=[' - ANNOTATED FILES', 'A.csv', 'B.json']):
         match_batch_num = re.search(r'BATCH (\d+)', original_string)
         match_format = re.search(r'\.(jpeg|jpg|png)$', original_string)
-        replace = re.sub(r'BATCH \d+', f'BATCH {match_batch_num.group(1)} - ANNOTATED FILES', original_string)
-        a_path = re.sub(match_format.group(0), 'A.csv', replace)
-        b_path = re.sub(match_format.group(0), 'B.json', replace)
-        return a_path, b_path 
+        replace = re.sub(r'BATCH \d+', f'BATCH {match_batch_num.group(1)}{affixes[0]}', original_string)
+        a_path = re.sub(match_format.group(0), affixes[1], replace)
+        b_path = re.sub(match_format.group(0), affixes[2], replace) if len(affixes) > 2 else None
+        return a_path, b_path if len(affixes) > 2 else None
+    
+    @staticmethod
+    def updated_replace(path, file_name):
+        path = re.sub(r'BATCH \d+', f'Thyrocytes and Clusters - Update', path)
+        candidates = [
+            f"{file_name}-thyrocyte and cluster.csv",
+            f"{file_name}-thyrocytes.csv"
+        ]
+        directory = os.path.dirname(path)
+        for candidate in candidates:
+            if os.path.exists(os.path.join(directory, candidate)):
+                return re.sub(
+                    rf'{re.escape(file_name)}\.(jpeg|jpg|png)$',
+                    candidate,
+                    path
+                )
+        return None
     
     @staticmethod
     def get_json_data(json_path):
@@ -138,13 +155,16 @@ class Utils:
         h_norm = bbox_height / img_height
         return x_center, y_center, w_norm, h_norm
 
-    def csv_data_to_annotations(csv_data):
-        thyrocyte_labels  = csv_data['label_name'].tolist()  # Assuming single class for simplicity
-        thyrocyte_bboxes = csv_data[
-            ['bbox_x','bbox_y','bbox_width','bbox_height']].apply(
-                lambda x: [x['bbox_x'], x['bbox_y'], x['bbox_width'], x['bbox_height']], axis=1).tolist()
-        return thyrocyte_labels, thyrocyte_bboxes
+    def csv_data_to_annotations(csv_data, class_name):
+        filtered = csv_data[csv_data["label_name"].isin(class_name)]
 
+        labels = filtered["label_name"].tolist()
+
+        bboxes = filtered[
+            ["bbox_x", "bbox_y", "bbox_width", "bbox_height"]
+        ].values.tolist()
+
+        return labels, bboxes
     def json_data_to_annotations(json_data, file):
         cluster_bboxes = Utils.polygon_to_bounding_box(json_data, file)
         cluster_labels = ["Cluster"] * len(cluster_bboxes)
@@ -180,14 +200,45 @@ class Utils:
                     has_annotation = True
         return tile_labels, tile_bboxes, has_annotation
 
-    def get_bboxes_and_labels(image_path, file):
-        csv_path, json_path  = Utils.replace(image_path)
-        csv_data = Utils.get_csv_data(csv_path, file)
-        json_data = Utils.get_json_data(json_path)
-        thyrocyte_labels, thyrocyte_bboxes = Utils.csv_data_to_annotations(csv_data)
-        cluster_labels, cluster_bboxes = Utils.json_data_to_annotations(json_data, file)
+    # def get_bboxes_and_labels(image_path, file):
+    #     csv_path, json_path  = Utils.replace(image_path)
+    #     csv_data = Utils.get_csv_data(csv_path, file)
+    #     json_data = Utils.get_json_data(json_path)
+    #     thyrocyte_labels, thyrocyte_bboxes = Utils.csv_data_to_annotations(csv_data)
+    #     cluster_labels, cluster_bboxes = Utils.json_data_to_annotations(json_data, file)
+    #     return thyrocyte_labels, thyrocyte_bboxes, cluster_labels, cluster_bboxes
+
+    def get_bboxes_and_labels_from_paths(
+        initial_thyrocyte_path, 
+        initial_cluster_path,
+        updated_cluster_path,
+        updated_thyrocyte_and_cluster_path,
+        file
+    ):
+        thyrocyte_labels, thyrocyte_bboxes = [], []
+        cluster_labels, cluster_bboxes = [], []
+        # Prioritize updated annotations if available
+        if isinstance(updated_thyrocyte_and_cluster_path, str) and updated_thyrocyte_and_cluster_path is not None:
+            thyrocyte_and_cluster_data = Utils.get_csv_data(updated_thyrocyte_and_cluster_path, file)
+            thyrocyte_labels, thyrocyte_bboxes = Utils.csv_data_to_annotations(thyrocyte_and_cluster_data, class_name=["Thyrocyte", "Thyrocytes", "Thycocyte"])
+            cluster_labels, cluster_bboxes = Utils.csv_data_to_annotations(thyrocyte_and_cluster_data, class_name=["Cluster", "Clusters"])
+        else:
+            # Use initial thyrocyte annotations
+            thyrocyte_data = Utils.get_csv_data(initial_thyrocyte_path, file)
+            thyrocyte_labels, thyrocyte_bboxes = Utils.csv_data_to_annotations(thyrocyte_data, class_name=["Thyrocyte", "Thyrocytes", "Thycocyte"])
+            # Use updated cluster annotations if available
+            if isinstance(updated_cluster_path, str) and updated_cluster_path is not None:
+                cluster_data = Utils.get_csv_data(updated_cluster_path, file)
+                cluster_labels, cluster_bboxes = Utils.csv_data_to_annotations(cluster_data, class_name=["Cluster", "Clusters"])
+            # Use initial cluster annotations otherwise
+            elif isinstance(initial_cluster_path, str) and initial_cluster_path is not None:
+                # Polygon to bounding box conversion from JSON
+                cluster_data = Utils.get_json_data(initial_cluster_path)
+                cluster_labels, cluster_bboxes = Utils.json_data_to_annotations(cluster_data, file)
+                
         return thyrocyte_labels, thyrocyte_bboxes, cluster_labels, cluster_bboxes
 
+        
     @staticmethod
     def handle_data_count_summary(invalid):
         for image_path, file in Utils.helper_os_walk():
@@ -299,13 +350,29 @@ class Utils:
     
     @staticmethod
     def preprocess_original_image_annotations_generator(invalid, preprocess_callback=None, file_callback=None, label="Both"):
-        for image_path, file in Utils.helper_os_walk():
-            if image_path not in invalid:
-                thyrocyte_labels, thyrocyte_bboxes, cluster_labels, cluster_bboxes = Utils.get_bboxes_and_labels(image_path, file)
-                
+        df = StaticVariable.data_and_paths
+        invalid_files = [
+            file.split('/')[-1] for file in invalid
+        ]
+        for _, row in df.iterrows():
+            file = row['File']
+            if file not in invalid_files:
+                thyrocyte_path = row['Thyrocyte_Annotation_Path']
+                cluster_path = row['Cluster_Annotation_Path']
+                updated_cluster_path = row['Updated_Cluster_Annotation_Path']
+                updated_thyrocyte_and_cluster_path = row['Updated_Thyrocyte_and_Cluster_Annotation_Path']
+                image_path = row['Image_Path']
+                thyrocyte_labels, thyrocyte_bboxes, cluster_labels, cluster_bboxes = Utils.get_bboxes_and_labels_from_paths(
+                    thyrocyte_path, 
+                    cluster_path,
+                    updated_cluster_path,
+                    updated_thyrocyte_and_cluster_path,
+                    file
+                    )
                 thyrocyte_bboxes, thyrocyte_labels = Utils.filter_less_than_eight_pixels(thyrocyte_bboxes, thyrocyte_labels)
                 
                 if np.any((np.array(thyrocyte_labels) == "Cluster") | (np.array(thyrocyte_labels) == "Clusters")):
+                    print(f"[INFO] Mislabelled clusters found in thyrocyte annotations for file: {file}. Splitting them out.")
                     t_bboxes, t_labels, c_bboxes, c_labels = Utils.filter_and_split_mislabelled(thyrocyte_labels, thyrocyte_bboxes)
                     thyrocyte_bboxes, thyrocyte_labels = t_bboxes, t_labels
                     cluster_bboxes += c_bboxes
@@ -510,11 +577,13 @@ class Utils:
             x_max = x_min + box_width
             y_max = y_min + box_height
 
+            color = "red" if label == 'Cluster' or label == 'Clusters' else "black"
+            
             # Draw rectangle
-            draw.rectangle([x_min, y_min, x_max, y_max], outline="red", width=3)
+            draw.rectangle([x_min, y_min, x_max, y_max], outline=color, width=3)
 
             # Draw text label
-            draw.text((x_min, y_min), str(label), fill="red")
+            draw.text((x_min, y_min), str(label), fill=color)
 
         
         format = os.path.splitext(file)[1]
@@ -523,6 +592,96 @@ class Utils:
             f"/workspace/Special_Problem/data_with_annotations/{file}",
             **save_kwargs
         )
+        
+    def iter_annotation_paths():
+        no_cluster_files = StaticVariable.no_cluster_files
+        no_cluster_files = (
+            no_cluster_files[no_cluster_files["remarks"] == "no cluster found"]["File"]
+            .astype(str)
+            .tolist()
+        )
+        for image_path, file in Utils.helper_os_walk():
+            file_name = os.path.splitext(file)[0]
+            
+            # Initial annotations
+            thyrocyte_path, cluster_path = Utils.replace(image_path)
+            
+            # Force cluster to None if explicitly marked
+            if file_name in no_cluster_files:
+                cluster_path = None
+                
+            # Updated annotations
+            updated_cluster_annotation_path, _ = Utils.replace(
+                image_path,
+                affixes=[" - UPDATED ANNOTATIONS", "-cluster.csv"],
+            )
+
+            updated_thyrocyte_and_cluster_annotation_path = Utils.updated_replace(
+                image_path, file_name
+            )
+            
+            # Validate paths
+            if not thyrocyte_path or not os.path.exists(thyrocyte_path):
+                thyrocyte_path = None
+
+            if not cluster_path or not os.path.exists(cluster_path):
+                cluster_path = None
+
+            if (
+                not updated_cluster_annotation_path
+                or not os.path.exists(updated_cluster_annotation_path)
+            ):
+                updated_cluster_annotation_path = None
+
+            if (
+                not updated_thyrocyte_and_cluster_annotation_path
+                or not os.path.exists(updated_thyrocyte_and_cluster_annotation_path)
+            ):
+                updated_thyrocyte_and_cluster_annotation_path = None
+
+            yield (
+                file,
+                thyrocyte_path,
+                cluster_path,
+                updated_cluster_annotation_path,
+                updated_thyrocyte_and_cluster_annotation_path,
+                image_path,
+            )
+            
+    def save_data_path_to_csv(
+        output_csv="/workspace/Special_Problem/explore_data_annotation_paths.csv",
+    ):
+        rows = [
+                {
+                    "File": file,
+                    "Thyrocyte_Annotation_Path": thyrocyte_path,
+                    "Cluster_Annotation_Path": cluster_path,
+                    "Updated_Cluster_Annotation_Path": updated_cluster_annotation_path,
+                    "Updated_Thyrocyte_and_Cluster_Annotation_Path": updated_thyrocyte_and_cluster_annotation_path,
+                    "Image_Path": image_path,
+                }
+                for (
+                    file,
+                    thyrocyte_path,
+                    cluster_path,
+                    updated_cluster_annotation_path,
+                    updated_thyrocyte_and_cluster_annotation_path,
+                    image_path,
+                )
+                in Utils.iter_annotation_paths()
+            ]
+        df = pd.DataFrame(
+            rows,
+            columns=[
+                "File",
+                "Thyrocyte_Annotation_Path",
+                "Cluster_Annotation_Path",
+                "Updated_Cluster_Annotation_Path",
+                "Updated_Thyrocyte_and_Cluster_Annotation_Path",
+                "Image_Path",
+            ],
+        )
+        df.to_csv(output_csv, index=False)
     
 class CallbackUtil:
     def __init__(self):
@@ -536,6 +695,7 @@ class CallbackUtil:
 
 if __name__ == '__main__':
     
+    Utils.save_data_path_to_csv()
     not_classified = []
     
     for dir in StaticVariable.DIR_PATH:
@@ -544,48 +704,47 @@ if __name__ == '__main__':
     callback = CallbackUtil()
     invalid = Utils.check_dataset()
     
-    for i in invalid:
-        print(f"Invalid dataset found: {i}")
+    # for i in invalid:
+    #     print(f"Invalid dataset found: {i}")
         
     Utils.data_split_csv(invalid)
-    
+        
     for data_type, data in Utils.preprocess_original_image_annotations_generator(
         invalid, 
         Utils.preprocess_augmented_image_annotations_helper,
         callback.set_file,
-        label="Thyrocyte"
+        label="Both"
     ):
         file = callback.get_file()
         level = Utils.get_corresponding_level(file)
         prefix = "augmented" if data_type == "Augmented" else "original"
         
-    #     """Save Original Images or Augmented Images for Visualization"""
-    #     # if prefix == 'augmented':
-    #     #     print(f"Saving visualization for {file}...")
-    #     #     Utils.saved_original_images_for_visualization(data, file)
+        """Save Original Images or Augmented Images for Visualization"""
+        if prefix == 'original':
+            # print(f"Saving visualization for {file}...")
+            Utils.saved_original_images_for_visualization(data, file)
             
-        """ For Original Image | Untiled Image """
-        image_path, label_path = Utils.get_corresponding_actual_path(file)
+        # """ For Original Image | Untiled Image """
+        # image_path, label_path = Utils.get_corresponding_actual_path(file)
         
-        """ Handle files not classified into any dataset split """
-        if image_path is None or label_path is None:
-            print(f"Skipping file {file} as it does not belong to any dataset split.")
-            not_classified.append(file)
-            continue
+        # """ Handle files not classified into any dataset split """
+        # if image_path is None or label_path is None:
+        #     print(f"Skipping file {file} as it does not belong to any dataset split.")
+        #     not_classified.append(file)
+        #     continue
         
-    #     # Utils.save_data(data, image_path, label_path, prefix, file, level)
+        # Utils.save_data(data, image_path, label_path, prefix, file, level)
         
-    #     # """ Tiling """
-    #     # image_path, label_path = Utils.get_corresponding_tiled_path(file)
-    #     # for tile_data, tile_id in Utils.process_tile_generator(data, prefix):
-    #     #     file_tile = file.replace(".", f"_{tile_id}.") 
-    #     #     Utils.save_data(tile_data, image_path, label_path, prefix, file_tile, level)
+        # """ Tiling """
+        # image_path, label_path = Utils.get_corresponding_tiled_path(file)
+        # for tile_data, tile_id in Utils.process_tile_generator(data, prefix):
+        #     file_tile = file.replace(".", f"_{tile_id}.") 
+        #     Utils.save_data(tile_data, image_path, label_path, prefix, file_tile, level)
             
-    #     # break  # --- IGNORE --- Remove this line to process all files
-    
     # # print("Errors found in files: ")
     # # sorted_errors = sorted(ERROR)
     # # print(sorted_errors)
     # print("Files not classified into any dataset split:")
-    not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
-    not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)
+    
+    # not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
+    # not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)
