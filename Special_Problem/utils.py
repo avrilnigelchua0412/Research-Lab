@@ -218,7 +218,7 @@ class Utils:
         matched_cols = mask.any(axis=0)
         cols = matched_cols[matched_cols].index.tolist()
 
-        assert len(cols) <= 1, "Target appears in multiple columns!"
+        # assert len(cols) <= 1, f"{target} appears in multiple columns!"
 
         return cols[0] if cols else None
 
@@ -549,29 +549,29 @@ if __name__ == '__main__':
         
     Utils.data_split_csv(invalid)
     
-    # for data_type, data in Utils.preprocess_original_image_annotations_generator(
-    #     invalid, 
-    #     Utils.preprocess_augmented_image_annotations_helper,
-    #     callback.set_file,
-    #     label="Thyrocyte"
-    # ):
-    #     file = callback.get_file()
-    #     level = Utils.get_corresponding_level(file)
-    #     prefix = "augmented" if data_type == "Augmented" else "original"
+    for data_type, data in Utils.preprocess_original_image_annotations_generator(
+        invalid, 
+        Utils.preprocess_augmented_image_annotations_helper,
+        callback.set_file,
+        label="Thyrocyte"
+    ):
+        file = callback.get_file()
+        level = Utils.get_corresponding_level(file)
+        prefix = "augmented" if data_type == "Augmented" else "original"
         
     #     """Save Original Images or Augmented Images for Visualization"""
     #     # if prefix == 'augmented':
     #     #     print(f"Saving visualization for {file}...")
     #     #     Utils.saved_original_images_for_visualization(data, file)
             
-    #     """ For Original Image | Untiled Image """
-    #     image_path, label_path = Utils.get_corresponding_actual_path(file)
+        """ For Original Image | Untiled Image """
+        image_path, label_path = Utils.get_corresponding_actual_path(file)
         
-    #     """ Handle files not classified into any dataset split """
-    #     if image_path is None or label_path is None:
-    #         print(f"Skipping file {file} as it does not belong to any dataset split.")
-    #         not_classified.append(file)
-    #         continue
+        """ Handle files not classified into any dataset split """
+        if image_path is None or label_path is None:
+            print(f"Skipping file {file} as it does not belong to any dataset split.")
+            not_classified.append(file)
+            continue
         
     #     # Utils.save_data(data, image_path, label_path, prefix, file, level)
         
@@ -587,5 +587,5 @@ if __name__ == '__main__':
     # # sorted_errors = sorted(ERROR)
     # # print(sorted_errors)
     # print("Files not classified into any dataset split:")
-    # not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
-    # not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)
+    not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
+    not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)

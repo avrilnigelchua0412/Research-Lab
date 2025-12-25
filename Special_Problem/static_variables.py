@@ -4,7 +4,7 @@ import os
 
 class StaticVariable:
     levels = pd.read_excel('/workspace/Special_Problem/FNAB ANNOTATIONS.xlsx', sheet_name='Classification')
-    summarized_levels = pd.read_csv('/workspace/Special_Problem/dataset_summary.csv')
+    summarized_levels = pd.read_csv('/workspace/Special_Problem/dataset_summary.csv') if os.path.exists('/workspace/Special_Problem/dataset_summary.csv') else None
     formats = ['.jpeg', '.jpg', '.png']
     data_path = '/workspace/Special_Problem/Data'
     tile_size = 512

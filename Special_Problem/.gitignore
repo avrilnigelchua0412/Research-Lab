@@ -2,8 +2,8 @@
 Data/
 Checked Data/
 data_with_annotations/
-thyro_models/
-
+refined_model/
+*.xlsx
 # Ignore YOLO dataset splits
 yolo_dataset_version_1/images/train/
 yolo_dataset_version_1/images/val/
