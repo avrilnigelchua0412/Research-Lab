@@ -72,19 +72,21 @@ class StaticVariable:
         "/workspace/Special_Problem/yolo_dataset_version_2/labels/test/"
         ]
         
-    transform = A.Compose(
+    transform_level_1 = A.Compose(
         [
             # Geometric Transformations
-            A.OneOf([
-                A.HorizontalFlip(p=1),
-                A.VerticalFlip(p=1),
-                A.RandomRotate90(p=1),
-            ], p=1),
+            A.HorizontalFlip(p=0.5),
+            A.VerticalFlip(p=0.5),
+            A.Affine(
+                translate_percent=0.05,
+                scale=(0.95, 1.05),
+                rotate=(-15, 15),
+                p=.75),
             
             # Photometric Transformations
             A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2, p=0.5),
             A.HueSaturationValue(hue_shift_limit=10, sat_shift_limit=15, val_shift_limit=10, p=0.5),
-            A.GaussNoise(std_range=(0.03, 0.05), p=1.0), # 1% to 5% noise
+            A.GaussNoise(std_range=(0.03, 0.05), p=0.5), # 3% to 5% noise
             
             # Occlusion/regularization
             A.CoarseDropout(
@@ -94,7 +96,54 @@ class StaticVariable:
             fill="random_uniform",
             p=0.5),
             A.GridDropout(ratio=0.05, p=0.5)
-            # ToTensorV2()
+        ],
+        seed=42,
+        bbox_params=A.BboxParams(format='coco', label_fields=['labels'],)
+    )
+    
+    transform_level_2 = A.Compose(
+        [
+            # Geometric Transformations
+            A.HorizontalFlip(p=0.5),
+            A.VerticalFlip(p=0.5),
+            A.Affine(
+                translate_percent=0.03,
+                scale=(0.95, 1.05),
+                rotate=(-10, 10),
+                p=0.5),
+            
+            # Photometric Transformations
+            A.RandomBrightnessContrast(brightness_limit=0.3, contrast_limit=0.3, p=0.4),
+            A.HueSaturationValue(hue_shift_limit=15, sat_shift_limit=20, val_shift_limit=15, p=0.4),
+            A.GaussNoise(std_range=(0.03, 0.05), p=0.3), # 3% to 5% noise
+            
+        ],
+        seed=42,
+        bbox_params=A.BboxParams(format='coco', label_fields=['labels'],)
+    )
+    
+    transform_level_3_to_4 = A.Compose(
+        [
+            # Geometric Transformations
+            A.HorizontalFlip(p=0.5),
+            A.VerticalFlip(p=0.5),
+            A.Affine(
+                translate_percent=0.02,
+                scale=(0.95, 1.05),
+                rotate=(-5, 5),
+                p=0.3),
+            
+            # Photometric Transformations
+            A.RandomBrightnessContrast(brightness_limit=0.4, contrast_limit=0.4, p=0.3),
+        ],
+        seed=42,
+        bbox_params=A.BboxParams(format='coco', label_fields=['labels'],)
+    )
+    
+    transform_level_5 = A.Compose([
+            # Geometric Transformations
+            A.HorizontalFlip(p=0.5),
+            A.VerticalFlip(p=0.5),
         ],
         seed=42,
         bbox_params=A.BboxParams(format='coco', label_fields=['labels'],)

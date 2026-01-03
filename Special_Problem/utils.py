@@ -253,6 +253,7 @@ class Utils:
                     # print(file.split('.')[0])
                     # print(Utils.column_look_up(file.split('.')[0]))
                     column = Utils.column_look_up(file.split('.')[0])
+                    column = column.replace(" ", "_")  # Clean up column name
                     if column is None:
                         continue
                     yield file, thyrocytes, column
@@ -348,6 +349,20 @@ class Utils:
             raise ValueError("Invalid specified_label. Choose from 'Thyrocyte', 'Cluster', or 'Both'.")
         return bboxes, labels
     
+    def getTransform(file_name):
+        level = Utils.get_corresponding_level(file_name)
+        if level == "LEVEL_I":
+            transform = StaticVariable.transform_level_1
+        elif level == "LEVEL_II":
+            transform = StaticVariable.transform_level_2
+        elif level ==  "LEVEL_III":
+            transform = StaticVariable.transform_level_3_to_4
+        elif level == "LEVEL_IV":
+            transform = StaticVariable.transform_level_3_to_4
+        elif level == "LEVEL_V":
+            transform = StaticVariable.transform_level_5
+        return transform
+    
     @staticmethod
     def preprocess_original_image_annotations_generator(invalid, preprocess_callback=None, file_callback=None, label="Both"):
         df = StaticVariable.data_and_paths
@@ -356,7 +371,7 @@ class Utils:
         ]
         for _, row in df.iterrows():
             file = row['File']
-            if file not in invalid_files:
+            if file not in invalid_files and file in StaticVariable.test_list:
                 thyrocyte_path = row['Thyrocyte_Annotation_Path']
                 cluster_path = row['Cluster_Annotation_Path']
                 updated_cluster_path = row['Updated_Cluster_Annotation_Path']
@@ -388,7 +403,7 @@ class Utils:
                     file_callback(file)
                 if preprocess_callback is not None and file in StaticVariable.train_list:
                     augmented_image, augmented_bboxes, augmented_labels = preprocess_callback(
-                        rgb_image, original_bboxes, original_labels
+                        rgb_image, original_bboxes, original_labels, Utils.getTransform(file)
                         )
                     yield "Augmented", (augmented_image, augmented_bboxes, augmented_labels)
                 yield "Original", (rgb_image, original_bboxes, original_labels)
@@ -396,8 +411,8 @@ class Utils:
                 print(f"Preprocessing skipped for invalid file: {file}")
     
     @staticmethod
-    def preprocess_augmented_image_annotations_helper(rgb_image, original_bboxes, original_labels):
-        augmented = StaticVariable.transform(image=rgb_image, bboxes=original_bboxes, labels=original_labels)
+    def preprocess_augmented_image_annotations_helper(rgb_image, original_bboxes, original_labels, transform):
+        augmented = transform(image=rgb_image, bboxes=original_bboxes, labels=original_labels)
         return augmented['image'], augmented['bboxes'], augmented['labels']
  
     
@@ -704,8 +719,8 @@ if __name__ == '__main__':
     callback = CallbackUtil()
     invalid = Utils.check_dataset()
     
-    # for i in invalid:
-    #     print(f"Invalid dataset found: {i}")
+    for i in invalid:
+        print(f"Invalid dataset found: {i}")
         
     Utils.data_split_csv(invalid)
         
@@ -713,33 +728,34 @@ if __name__ == '__main__':
         invalid, 
         Utils.preprocess_augmented_image_annotations_helper,
         callback.set_file,
-        label="Both"
+        label="Thyrocyte"
     ):
         file = callback.get_file()
         level = Utils.get_corresponding_level(file)
         prefix = "augmented" if data_type == "Augmented" else "original"
         
         """Save Original Images or Augmented Images for Visualization"""
-        if prefix == 'original':
-            # print(f"Saving visualization for {file}...")
-            Utils.saved_original_images_for_visualization(data, file)
+        # if prefix == 'original':
+        #     # print(f"Saving visualization for {file}...")
+        #     Utils.saved_original_images_for_visualization(data, f"{level}_{file}")
             
-        # """ For Original Image | Untiled Image """
-        # image_path, label_path = Utils.get_corresponding_actual_path(file)
+    #     """ For Original Image | Untiled Image """
+    #     image_path, label_path = Utils.get_corresponding_actual_path(file)
         
-        # """ Handle files not classified into any dataset split """
-        # if image_path is None or label_path is None:
-        #     print(f"Skipping file {file} as it does not belong to any dataset split.")
-        #     not_classified.append(file)
-        #     continue
+    #     """ Handle files not classified into any dataset split """
+    #     if image_path is None or label_path is None:
+    #         print(f"Skipping file {file} as it does not belong to any dataset split.")
+    #         not_classified.append(file)
+    #         continue
         
-        # Utils.save_data(data, image_path, label_path, prefix, file, level)
+    #     Utils.save_data(data, image_path, label_path, prefix, file, level)
         
-        # """ Tiling """
-        # image_path, label_path = Utils.get_corresponding_tiled_path(file)
-        # for tile_data, tile_id in Utils.process_tile_generator(data, prefix):
-        #     file_tile = file.replace(".", f"_{tile_id}.") 
-        #     Utils.save_data(tile_data, image_path, label_path, prefix, file_tile, level)
+        """ Tiling """
+        image_path, label_path = Utils.get_corresponding_tiled_path(file)
+        for tile_data, tile_id in Utils.process_tile_generator(data, prefix):
+            file_tile = file.replace(".", f"_{tile_id}.") 
+    #         Utils.save_data(tile_data, image_path, label_path, prefix, file_tile, level)
+            Utils.saved_original_images_for_visualization(tile_data, f"{level}_{prefix}_{file_tile}")
             
     # # print("Errors found in files: ")
     # # sorted_errors = sorted(ERROR)

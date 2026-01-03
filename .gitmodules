@@ -1,3 +1,9 @@
 [submodule "Special_Problem/Exploring-YOLOv5"]
 	path = Special_Problem/Exploring-YOLOv5
 	url = https://github.com/avrilnigelchua0412/Exploring-YOLOv5
+[submodule "Special_Problem/Exploring-YOLOv7"]
+	path = Special_Problem/Exploring-YOLOv7
+	url = https://github.com/avrilnigelchua0412/Exploring-YOLOv7
+[submodule "Special_Problem/pytorch-grad-cam"]
+	path = Special_Problem/pytorch-grad-cam
+	url = https://github.com/jacobgil/pytorch-grad-cam

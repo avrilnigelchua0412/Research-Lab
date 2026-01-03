@@ -2,7 +2,8 @@
 Data/
 Checked Data/
 data_with_annotations/
-refined_model/
+Phase1_Model/
+Phase2_Model/
 *.xlsx
 # Ignore YOLO dataset splits
 yolo_dataset_version_1/images/train/
