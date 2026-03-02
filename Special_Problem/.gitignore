@@ -4,6 +4,15 @@ Checked Data/
 data_with_annotations/
 Phase1_Model/
 Phase2_Model/
+yolov5nano_heatmap_result/
+yolov7tiny_heatmap_result/
+combined_yolov5nano_heatmap_result/
+combined_yolov7tiny_heatmap_result/
+baseline_yolov5nano_heatmap_result/
+baseline_yolov7tiny_heatmap_result/
+cl_yolov5nano_heatmap_result/
+cl_yolov7tiny_heatmap_result/
+test_data_for_validation/
 *.xlsx
 # Ignore YOLO dataset splits
 yolo_dataset_version_1/images/train/
