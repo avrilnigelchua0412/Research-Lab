@@ -1,0 +1,19 @@
+services:
+
+  yolov5:
+    build: ./environments/yolov5
+    container_name: yolov5-env
+    gpus: all
+    shm_size: "8gb"
+    volumes:
+      - .:/workspace
+    command: sleep infinity
+
+  yolov7:
+    build: ./environments/yolov7
+    container_name: yolov7-env
+    gpus: all
+    shm_size: "8gb"
+    volumes:
+      - .:/workspace
+    command: sleep infinity
