@@ -1,0 +1,7 @@
+[submodule "models/yolov5"]
+	path = models/yolov5
+	url = https://github.com/avrilnigelchua0412/Exploring-YOLOv5
+
+[submodule "models/yolov7"]
+	path = models/yolov7
+	url = https://github.com/avrilnigelchua0412/Exploring-YOLOv7
