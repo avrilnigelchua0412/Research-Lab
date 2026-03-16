@@ -1,7 +1,9 @@
 services:
 
   yolov5:
-    build: ./environments/yolov5
+    build:
+      context: .
+      dockerfile: environments/yolov5/dockerfile
     container_name: yolov5-env
     gpus: all
     shm_size: "8gb"

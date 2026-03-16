@@ -1,4 +1,7 @@
-FROM nvidia/cuda:12.6.1-cudnn-runtime-ubuntu20.04
+FROM nvidia/cuda:12.6.1-cudnn-runtime-ubuntu22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
 
 WORKDIR /workspace
 
@@ -6,12 +9,16 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     git \
+    libgl1 \
+    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-COPY requirements.txt .
+COPY environments/base_requirements.txt .
+RUN pip install --no-cache-dir -r base_requirements.txt
 
+COPY environments/yolov5/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 CMD ["bash"]

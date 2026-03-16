@@ -3,12 +3,12 @@ import pandas as pd
 import os
 
 class StaticVariable:
-    levels = pd.read_excel('/workspace/Special_Problem/FNAB ANNOTATIONS.xlsx', sheet_name='Classification')
-    no_cluster_files = pd.read_excel('/workspace/Special_Problem/FNAB ANNOTATIONS.xlsx', sheet_name='Reannotations')
-    summarized_levels = pd.read_csv('/workspace/Special_Problem/dataset_summary.csv') if os.path.exists('/workspace/Special_Problem/dataset_summary.csv') else None
-    data_and_paths = pd.read_csv('/workspace/Special_Problem/explore_data_annotation_paths.csv') if os.path.exists('/workspace/Special_Problem/explore_data_annotation_paths.csv') else None
+    levels = pd.read_excel('datasets/raw/fnab/FNAB ANNOTATIONS.xlsx', sheet_name='Classification')
+    no_cluster_files = pd.read_excel('datasets/raw/fnab/FNAB ANNOTATIONS.xlsx', sheet_name='Reannotations')
+    summarized_levels = pd.read_csv('results/dataset_summary.csv') if os.path.exists('results/dataset_summary.csv') else None
+    data_and_paths = pd.read_csv('results/explore_data_annotation_paths.csv') if os.path.exists('results/explore_data_annotation_paths.csv') else None
     formats = ['.jpeg', '.jpg', '.png']
-    data_path = '/workspace/Special_Problem/Data'
+    data_path = 'datasets/raw/fnab'
     tile_size = 512
     min_pixel_size = 8
     value = [255, 255, 255]
@@ -33,43 +33,45 @@ class StaticVariable:
             print(f"Error reading {path}: {e}")
             return None if return_none else []
 
-    train_list = load_file_list('/workspace/Special_Problem/train_df_summary.csv')
-    val_list   = load_file_list('/workspace/Special_Problem/val_df_summary.csv')
-    test_list  = load_file_list('/workspace/Special_Problem/test_df_summary.csv')
+    train_list = load_file_list('results/train_df_summary.csv')
+    val_list   = load_file_list('results/val_df_summary.csv')
+    test_list  = load_file_list('results/test_df_summary.csv')
     
-    tile_train_image_path = "/workspace/Special_Problem/yolo_dataset_version_2/images/train/"
-    tile_train_label_path = "/workspace/Special_Problem/yolo_dataset_version_2/labels/train/"
+    prefix = "datasets/raw/fnab/yolo_dataset_version_"
     
-    actual_train_image_path = "/workspace/Special_Problem/yolo_dataset_version_1/images/train/"
-    actual_train_label_path = "/workspace/Special_Problem/yolo_dataset_version_1/labels/train/"
+    tile_train_image_path = f"{prefix}2/images/train/"
+    tile_train_label_path = f"{prefix}2/labels/train/"
+    
+    actual_train_image_path = f"{prefix}1/images/train/"
+    actual_train_label_path = f"{prefix}1/labels/train/"
    
-    tile_valid_image_path = "/workspace/Special_Problem/yolo_dataset_version_2/images/val/"
-    tile_valid_label_path = "/workspace/Special_Problem/yolo_dataset_version_2/labels/val/"
+    tile_valid_image_path = f"{prefix}2/images/val/"
+    tile_valid_label_path = f"{prefix}2/labels/val/"
     
-    actual_valid_image_path = "/workspace/Special_Problem/yolo_dataset_version_1/images/val/"
-    actual_valid_label_path = "/workspace/Special_Problem/yolo_dataset_version_1/labels/val/"
+    actual_valid_image_path = f"{prefix}1/images/val/"
+    actual_valid_label_path = f"{prefix}1/labels/val/"
     
-    tile_test_image_path = "/workspace/Special_Problem/yolo_dataset_version_2/images/test/"
-    tile_test_label_path = "/workspace/Special_Problem/yolo_dataset_version_2/labels/test/"
+    tile_test_image_path = f"{prefix}2/images/test/"
+    tile_test_label_path = f"{prefix}2/labels/test/"
     
-    actual_test_image_path = "/workspace/Special_Problem/yolo_dataset_version_1/images/test/"
-    actual_test_label_path = "/workspace/Special_Problem/yolo_dataset_version_1/labels/test/"
+    actual_test_image_path = f"{prefix}1/images/test/"
+    actual_test_label_path = f"{prefix}1/labels/test/"
     
-    # tile_path = '/workspace/Special_Problem/yolo_dataset_version_2/'
+    # tile_path = '/workspace/Special_Problem/2/'
 
     DIR_PATH = [
-        "/workspace/Special_Problem/yolo_dataset_version_1/images/train/",
-        "/workspace/Special_Problem/yolo_dataset_version_1/images/val/",
-        "/workspace/Special_Problem/yolo_dataset_version_1/images/test/",
-        "/workspace/Special_Problem/yolo_dataset_version_1/labels/train/",
-        "/workspace/Special_Problem/yolo_dataset_version_1/labels/val/",
-        "/workspace/Special_Problem/yolo_dataset_version_1/labels/test/",
-        "/workspace/Special_Problem/yolo_dataset_version_2/images/train/",
-        "/workspace/Special_Problem/yolo_dataset_version_2/images/val/",
-        "/workspace/Special_Problem/yolo_dataset_version_2/images/test/",
-        "/workspace/Special_Problem/yolo_dataset_version_2/labels/train/",
-        "/workspace/Special_Problem/yolo_dataset_version_2/labels/val/",
-        "/workspace/Special_Problem/yolo_dataset_version_2/labels/test/"
+        f"{prefix}1/images/train/",
+        f"{prefix}1/images/val/",
+        f"{prefix}1/images/test/",
+        f"{prefix}1/labels/train/",
+        f"{prefix}1/labels/val/",
+        f"{prefix}1/labels/test/",
+        f"{prefix}2/images/train/",
+        f"{prefix}2/images/val/",
+        f"{prefix}2/images/test/",
+        f"{prefix}2/labels/train/",
+        f"{prefix}2/labels/val/",
+        f"{prefix}2/labels/test/"
         ]
         
     transform_level_1 = A.Compose(
@@ -156,12 +158,3 @@ class StaticVariable:
     @classmethod
     def get_transform(cls):
         return cls.transform
-    
-    # @staticmethod
-    # def cluster_group(x):
-    #     if x <= 4:
-    #         return "low"
-    #     elif x <= 10:
-    #         return "medium"
-    #     else:
-    #         return "high"

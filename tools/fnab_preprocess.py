@@ -9,6 +9,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 import shutil
 from PIL import Image, ImageDraw
+import warnings
 
 ERROR = set()
 
@@ -284,7 +285,7 @@ class Utils:
             for file, thyrocytes, classification in Utils.handle_data_count_summary(invalid)
         ]
         summary_df = pd.DataFrame(rows, columns=['File', 'Thyrocytes_Count', 'Classification'])
-        summary_df.to_csv('/workspace/Special_Problem/dataset_summary.csv', index=False)
+        summary_df.to_csv('results/dataset_summary.csv', index=False)
         
         # summary = pd.read_csv("/workspace/Special_Problem/dataset_summary.csv")
         # summary["Cluster_Group"] = summary["Clusters_Count"].apply(StaticVariable.cluster_group)
@@ -299,9 +300,9 @@ class Utils:
             temp_df, test_size=0.5, stratify=temp_df["Classification"], random_state=42
         )
         
-        train_df.to_csv('/workspace/Special_Problem/train_df_summary.csv', index=False)
-        val_df.to_csv('/workspace/Special_Problem/val_df_summary.csv', index=False)
-        test_df.to_csv('/workspace/Special_Problem/test_df_summary.csv', index=False)      
+        train_df.to_csv('results/train_df_summary.csv', index=False)
+        val_df.to_csv('results/val_df_summary.csv', index=False)
+        test_df.to_csv('results/test_df_summary.csv', index=False)      
           
     def helper_os_walk(file_path=StaticVariable.data_path):
         for root, _, files in os.walk(file_path):
@@ -387,7 +388,7 @@ class Utils:
                 thyrocyte_bboxes, thyrocyte_labels = Utils.filter_less_than_eight_pixels(thyrocyte_bboxes, thyrocyte_labels)
                 
                 if np.any((np.array(thyrocyte_labels) == "Cluster") | (np.array(thyrocyte_labels) == "Clusters")):
-                    print(f"[INFO] Mislabelled clusters found in thyrocyte annotations for file: {file}. Splitting them out.")
+                    warnings.warn(f"[INFO] Mislabelled clusters found in thyrocyte annotations for file: {file}. Splitting them out.")
                     t_bboxes, t_labels, c_bboxes, c_labels = Utils.filter_and_split_mislabelled(thyrocyte_labels, thyrocyte_bboxes)
                     thyrocyte_bboxes, thyrocyte_labels = t_bboxes, t_labels
                     cluster_bboxes += c_bboxes
@@ -409,10 +410,10 @@ class Utils:
                         yield "Augmented", (augmented_image, augmented_bboxes, augmented_labels)
                     yield "Original", (rgb_image, original_bboxes, original_labels)
                 except Exception as e:
-                    print(f"Error processing file {file}: {e}")
+                    warnings.warn(f"Error processing file {file}: {e}")
                     ERROR.add(file)
             else:
-                print(f"Preprocessing skipped for invalid file: {file}")
+                warnings.warn(f"Preprocessing skipped for invalid file: {file}")
     
     @staticmethod
     def preprocess_augmented_image_annotations_helper(rgb_image, original_bboxes, original_labels, transform):
@@ -610,7 +611,7 @@ class Utils:
         save_kwargs = Utils.image_save_kwargs(format)
         # conf_values = ['confidence_value 0.5', 'confidence_value 0.35', 'confidence_value 0.65']
         # for conf_value in conf_values:
-        dir = f'Special_Problem/test_data_for_validation/'
+        dir = f'results/test_data_for_validation/'
         # print(folder)
         os.makedirs(dir, exist_ok=True)
         pil_img.save(
@@ -674,7 +675,7 @@ class Utils:
             )
             
     def save_data_path_to_csv(
-        output_csv="/workspace/Special_Problem/explore_data_annotation_paths.csv",
+        output_csv="results/explore_data_annotation_paths.csv",
     ):
         rows = [
                 {
@@ -719,59 +720,59 @@ class CallbackUtil:
         return self.file
 
 if __name__ == '__main__':
+    print("Hello World")
+    # Utils.save_data_path_to_csv()
+    # not_classified = []
     
-    Utils.save_data_path_to_csv()
-    not_classified = []
+    # for dir in StaticVariable.DIR_PATH:
+    #     os.makedirs(dir, exist_ok=True)
+        
+    # callback = CallbackUtil()
+    # invalid = Utils.check_dataset()
     
-    for dir in StaticVariable.DIR_PATH:
-        os.makedirs(dir, exist_ok=True)
+    # for i in invalid:
+    #     print(f"Invalid dataset found: {i}")
         
-    callback = CallbackUtil()
-    invalid = Utils.check_dataset()
-    
-    for i in invalid:
-        print(f"Invalid dataset found: {i}")
+    # Utils.data_split_csv(invalid)
         
-    Utils.data_split_csv(invalid)
+    # for data_type, data in Utils.preprocess_original_image_annotations_generator(
+    #     invalid, 
+    #     Utils.preprocess_augmented_image_annotations_helper,
+    #     callback.set_file,
+    #     label="Both"
+    # ):
+    #     file = callback.get_file()
+    #     level = Utils.get_corresponding_level(file)
+    #     prefix = "augmented" if data_type == "Augmented" else "original"
         
-    for data_type, data in Utils.preprocess_original_image_annotations_generator(
-        invalid, 
-        Utils.preprocess_augmented_image_annotations_helper,
-        callback.set_file,
-        label="Both"
-    ):
-        file = callback.get_file()
-        level = Utils.get_corresponding_level(file)
-        prefix = "augmented" if data_type == "Augmented" else "original"
+    #     """Save Original Images or Augmented Images for Visualization"""
+    #     if prefix == 'original': # and level != 'LEVEL_IV' and level != 'LEVEL_V':
+    #         # print(f"Saving visualization for {file}...")
+    #         Utils.saved_original_images_for_visualization(data, f"Ground_Truth_{file}", f'original_{file}')
+    #     # """ For Original Image | Untiled Image """
+    #     # image_path, label_path = Utils.get_corresponding_actual_path(file)
         
-        """Save Original Images or Augmented Images for Visualization"""
-        if prefix == 'original': # and level != 'LEVEL_IV' and level != 'LEVEL_V':
-            # print(f"Saving visualization for {file}...")
-            Utils.saved_original_images_for_visualization(data, f"Ground_Truth_{file}", f'original_{file}')
-        # """ For Original Image | Untiled Image """
-        # image_path, label_path = Utils.get_corresponding_actual_path(file)
+    #     # """ Handle files not classified into any dataset split """
+    #     # if image_path is None or label_path is None:
+    #     #     print(f"Skipping file {file} as it does not belong to any dataset split.")
+    #     #     not_classified.append(file)
+    #     #     continue
         
-        # """ Handle files not classified into any dataset split """
-        # if image_path is None or label_path is None:
-        #     print(f"Skipping file {file} as it does not belong to any dataset split.")
-        #     not_classified.append(file)
-        #     continue
+    #     # Utils.save_data(data, image_path, label_path, prefix, file, level)
         
-        # Utils.save_data(data, image_path, label_path, prefix, file, level)
-        
-        # # if level in ['LEVEL_I', 'LEVEL_II','LEVEL_III']:
-        # """ Tiling """
-        # image_path, label_path = Utils.get_corresponding_tiled_path(file)
-        # for tile_data, tile_id in Utils.process_tile_generator(data, prefix):
-        #     file_tile = file.replace(".", f"_{tile_id}.") 
-        #     Utils.save_data(tile_data, image_path, label_path, prefix, file_tile, level)
+    #     # # if level in ['LEVEL_I', 'LEVEL_II','LEVEL_III']:
+    #     # """ Tiling """
+    #     # image_path, label_path = Utils.get_corresponding_tiled_path(file)
+    #     # for tile_data, tile_id in Utils.process_tile_generator(data, prefix):
+    #     #     file_tile = file.replace(".", f"_{tile_id}.") 
+    #     #     Utils.save_data(tile_data, image_path, label_path, prefix, file_tile, level)
             
-            # # Utils.saved_original_images_for_visualization(tile_data, f"{level}_{prefix}_{file_tile}")
-            # Utils.saved_original_images_for_visualization(tile_data, level , f"{prefix}_{file_tile}")
-    # # print("Errors found in files: ")
-    # # sorted_errors = sorted(ERROR)
-    # # print(sorted_errors)
-    # print("Files not classified into any dataset split:")
+    #         # # Utils.saved_original_images_for_visualization(tile_data, f"{level}_{prefix}_{file_tile}")
+    #         # Utils.saved_original_images_for_visualization(tile_data, level , f"{prefix}_{file_tile}")
+    # # # print("Errors found in files: ")
+    # # # sorted_errors = sorted(ERROR)
+    # # # print(sorted_errors)
+    # # print("Files not classified into any dataset split:")
     
-    not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
-    not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)
+    # not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
+    # not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)
