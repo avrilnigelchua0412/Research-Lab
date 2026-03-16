@@ -37,7 +37,7 @@ class StaticVariable:
     val_list   = load_file_list('results/val_df_summary.csv')
     test_list  = load_file_list('results/test_df_summary.csv')
     
-    prefix = "datasets/raw/fnab/yolo_dataset_version_"
+    prefix = "datasets/processed/fnab/yolo_dataset_version_"
     
     tile_train_image_path = f"{prefix}2/images/train/"
     tile_train_label_path = f"{prefix}2/labels/train/"
@@ -57,8 +57,6 @@ class StaticVariable:
     actual_test_image_path = f"{prefix}1/images/test/"
     actual_test_label_path = f"{prefix}1/labels/test/"
     
-    # tile_path = '/workspace/Special_Problem/2/'
-
     DIR_PATH = [
         f"{prefix}1/images/train/",
         f"{prefix}1/images/val/",

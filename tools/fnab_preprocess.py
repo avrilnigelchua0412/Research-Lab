@@ -27,6 +27,9 @@ class Utils:
     def replace(original_string, affixes=[' - ANNOTATED FILES', 'A.csv', 'B.json']):
         match_batch_num = re.search(r'BATCH (\d+)', original_string)
         match_format = re.search(r'\.(jpeg|jpg|png)$', original_string)
+        # Guard clause
+        if match_batch_num is None or match_format is None:
+            return "", ""
         replace = re.sub(r'BATCH \d+', f'BATCH {match_batch_num.group(1)}{affixes[0]}', original_string)
         a_path = re.sub(match_format.group(0), affixes[1], replace)
         b_path = re.sub(match_format.group(0), affixes[2], replace) if len(affixes) > 2 else None
@@ -629,7 +632,6 @@ class Utils:
         for image_path, file in Utils.helper_os_walk():
             file_name = os.path.splitext(file)[0]
             
-            # Initial annotations
             thyrocyte_path, cluster_path = Utils.replace(image_path)
             
             # Force cluster to None if explicitly marked
@@ -720,7 +722,10 @@ class CallbackUtil:
         return self.file
 
 if __name__ == '__main__':
-    print("Hello World")
+    
+    for image_path, file in Utils.helper_os_walk():
+        print(image_path)
+    
     # Utils.save_data_path_to_csv()
     # not_classified = []
     
@@ -739,40 +744,43 @@ if __name__ == '__main__':
     #     invalid, 
     #     Utils.preprocess_augmented_image_annotations_helper,
     #     callback.set_file,
-    #     label="Both"
+    #     label="Thyrocyte"
     # ):
     #     file = callback.get_file()
     #     level = Utils.get_corresponding_level(file)
     #     prefix = "augmented" if data_type == "Augmented" else "original"
         
-    #     """Save Original Images or Augmented Images for Visualization"""
-    #     if prefix == 'original': # and level != 'LEVEL_IV' and level != 'LEVEL_V':
-    #         # print(f"Saving visualization for {file}...")
-    #         Utils.saved_original_images_for_visualization(data, f"Ground_Truth_{file}", f'original_{file}')
-    #     # """ For Original Image | Untiled Image """
-    #     # image_path, label_path = Utils.get_corresponding_actual_path(file)
+    #     # """Save Original Images or Augmented Images for Visualization"""
+    #     # if prefix == 'original': # and level != 'LEVEL_IV' and level != 'LEVEL_V':
+    #     #     # print(f"Saving visualization for {file}...")
+    #     #     Utils.saved_original_images_for_visualization(data, f"Ground_Truth_{file}", f'original_{file}')
         
-    #     # """ Handle files not classified into any dataset split """
-    #     # if image_path is None or label_path is None:
-    #     #     print(f"Skipping file {file} as it does not belong to any dataset split.")
-    #     #     not_classified.append(file)
-    #     #     continue
+    #     """ For Original Image | Untiled Image """
+    #     image_path, label_path = Utils.get_corresponding_actual_path(file)
+        
+    #     """ Handle files not classified into any dataset split """
+    #     if image_path is None or label_path is None:
+    #         print(f"Skipping file {file} as it does not belong to any dataset split.")
+    #         not_classified.append(file)
+    #         continue
         
     #     # Utils.save_data(data, image_path, label_path, prefix, file, level)
         
-    #     # # if level in ['LEVEL_I', 'LEVEL_II','LEVEL_III']:
-    #     # """ Tiling """
+    #     # if level in ['LEVEL_I', 'LEVEL_II','LEVEL_III']:
+    #     """ Tiling """
     #     # image_path, label_path = Utils.get_corresponding_tiled_path(file)
-    #     # for tile_data, tile_id in Utils.process_tile_generator(data, prefix):
-    #     #     file_tile = file.replace(".", f"_{tile_id}.") 
-    #     #     Utils.save_data(tile_data, image_path, label_path, prefix, file_tile, level)
+    #     for tile_data, tile_id in Utils.process_tile_generator(data, prefix):
+    #         file_tile = file.replace(".", f"_{tile_id}.") 
+    #         Utils.save_data(tile_data, image_path, label_path, prefix, file_tile, level)
             
-    #         # # Utils.saved_original_images_for_visualization(tile_data, f"{level}_{prefix}_{file_tile}")
+    #         # Utils.saved_original_images_for_visualization(tile_data, f"{level}_{prefix}_{file_tile}")
     #         # Utils.saved_original_images_for_visualization(tile_data, level , f"{prefix}_{file_tile}")
-    # # # print("Errors found in files: ")
-    # # # sorted_errors = sorted(ERROR)
-    # # # print(sorted_errors)
-    # # print("Files not classified into any dataset split:")
+    #         break
+        
+    # print("Errors found in files: ")
+    # sorted_errors = sorted(ERROR)
+    # print(sorted_errors)
     
+    # print("Files not classified into any dataset split:")
     # not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
     # not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)
