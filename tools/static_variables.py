@@ -3,20 +3,22 @@ import pandas as pd
 import os
 
 class StaticVariable:
-    levels = pd.read_excel('datasets/raw/fnab/FNAB ANNOTATIONS.xlsx', sheet_name='Classification')
-    no_cluster_files = pd.read_excel('datasets/raw/fnab/FNAB ANNOTATIONS.xlsx', sheet_name='Reannotations')
+    main_raw_prefix = 'datasets/raw/'
+    levels = pd.read_excel(f'{main_raw_prefix}fnab/FNAB ANNOTATIONS.xlsx', sheet_name='Classification')
+    no_cluster_files = pd.read_excel(f'{main_raw_prefix}fnab/FNAB ANNOTATIONS.xlsx', sheet_name='Reannotations')
     summarized_levels = pd.read_csv('results/dataset_summary.csv') if os.path.exists('results/dataset_summary.csv') else None
     data_and_paths = pd.read_csv('results/explore_data_annotation_paths.csv') if os.path.exists('results/explore_data_annotation_paths.csv') else None
     formats = ['.jpeg', '.jpg', '.png']
-    data_path = 'datasets/raw/fnab'
+    data_path = f'{main_raw_prefix}fnab'
     tile_size = 512
     min_pixel_size = 8
     value = [255, 255, 255]
     overlap = .25
+    # {'confusant', 'CONFUSANT', 'Confusant', ' Confusant'}
     # {'Thycocyte', 'Cluster', 'Thyrocytes', 'Thyrocyte'}
     # label_map = {'Cluster' : 0, 'Clusters': 0, 'Thyrocyte': 1, 'Thyrocytes': 1, "Thycocyte": 1}
     # label_map = {'Cluster' : 0, 'Clusters': 0}
-    label_map = {'Thyrocyte': 0, 'Thyrocytes': 0, "Thycocyte": 0}
+    label_map = {'Thyrocyte': 0, 'Thyrocytes': 0, "Thycocyte": 0, 'confusant' : 1, 'CONFUSANT' : 1, 'Confusant' : 1, ' Confusant' : 1}
     
     def load_file_list(path, return_none=True):
         """

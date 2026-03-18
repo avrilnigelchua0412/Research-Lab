@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 import shutil
 from PIL import Image, ImageDraw
 import warnings
+from pathlib import Path
 
 ERROR = set()
 
@@ -217,10 +218,12 @@ class Utils:
         initial_cluster_path,
         updated_cluster_path,
         updated_thyrocyte_and_cluster_path,
+        confusant_path,
         file
     ):
         thyrocyte_labels, thyrocyte_bboxes = [], []
         cluster_labels, cluster_bboxes = [], []
+        confusant_labels, confusant_bboxes = [], []
         # Prioritize updated annotations if available
         if isinstance(updated_thyrocyte_and_cluster_path, str) and updated_thyrocyte_and_cluster_path is not None:
             thyrocyte_and_cluster_data = Utils.get_csv_data(updated_thyrocyte_and_cluster_path, file)
@@ -239,12 +242,22 @@ class Utils:
                 # Polygon to bounding box conversion from JSON
                 cluster_data = Utils.get_json_data(initial_cluster_path)
                 cluster_labels, cluster_bboxes = Utils.json_data_to_annotations(cluster_data, file)
-                
-        return thyrocyte_labels, thyrocyte_bboxes, cluster_labels, cluster_bboxes
+        if isinstance(confusant_path, str) and confusant_path is not None:
+            confusant_data = Utils.get_csv_data(confusant_path, file)
+            confusant_labels, confusant_bboxes = Utils.csv_data_to_annotations(
+                confusant_data, class_name=['confusant', 'CONFUSANT', 'Confusant', ' Confusant']
+                )
+        return thyrocyte_labels, thyrocyte_bboxes, cluster_labels, cluster_bboxes, confusant_labels, confusant_bboxes
 
+    # for image_path, file in Utils.helper_os_walk():
+    #     file_name = os.path.splitext(file)[0]
+    #     confusant_path = Utils.confusant_path_affix(file_name)
+    #     if os.path.exists(confusant_path):
+    #         confusant_data = Utils.get_csv_data(confusant_path, file)
+    #         filtered = confusant_data['label_name']
         
     @staticmethod
-    def handle_data_count_summary(invalid):
+    def handle_data_count_summary(invalid, confusant_list):
         for image_path, file in Utils.helper_os_walk():
             if image_path not in invalid:
                 try:
@@ -256,11 +269,12 @@ class Utils:
                     # yield file, thyrocytes, clusters
                     # print(file.split('.')[0])
                     # print(Utils.column_look_up(file.split('.')[0]))
-                    column = Utils.column_look_up(file.split('.')[0])
+                    file_name = file.split('.')[0]
+                    column = Utils.column_look_up(file_name)
                     column = column.replace(" ", "_")  # Clean up column name
                     if column is None:
                         continue
-                    yield file, thyrocytes, column
+                    yield file, thyrocytes, column, 1 if file_name in confusant_list else 0
                 except KeyError as e:
                     print(f"{e} in {file}")
             else:
@@ -278,31 +292,65 @@ class Utils:
 
         return cols[0] if cols else None
 
+    """
+    The dataset was partitioned into training, validation, and test sets using stratified sampling based on the
+    joint distribution of classification labels and confusant presence, with rare combinations grouped to ensure
+    stable and representative splits.
+    """
     @staticmethod
-    def data_split_csv(invalid):
-        
+    def data_split_csv(invalid, confusant_list):
         rows = [
-            # {'File': file, 'Thyrocytes_Count': thyrocytes, 'Clusters_Count': clusters}
-            {'File': file, 'Thyrocytes_Count': thyrocytes, 'Classification': classification}
-            # for file, thyrocytes, clusters in Utils.handle_data_count_summary(invalid)
-            for file, thyrocytes, classification in Utils.handle_data_count_summary(invalid)
+            {
+                'File': file,
+                'Thyrocytes_Count': thyrocytes,
+                'Classification': classification,
+                'Confusant': confusant
+            }
+            for file, thyrocytes, classification, confusant
+            in Utils.handle_data_count_summary(invalid, confusant_list)
         ]
-        summary_df = pd.DataFrame(rows, columns=['File', 'Thyrocytes_Count', 'Classification'])
-        summary_df.to_csv('results/dataset_summary.csv', index=False)
-        
-        # summary = pd.read_csv("/workspace/Special_Problem/dataset_summary.csv")
-        # summary["Cluster_Group"] = summary["Clusters_Count"].apply(StaticVariable.cluster_group)
-        
-        # Stratified split (80% train, 10% val, 10% test)
+
+        summary_df = pd.DataFrame(rows)
+
+        # Debug distribution
+        print(summary_df.value_counts(['Classification', 'Confusant']))
+
+        # Joint stratification key
+        summary_df["stratify_key"] = (
+            summary_df["Classification"].astype(str) + "_" +
+            summary_df["Confusant"].astype(str)
+        )
+
+        # Handle rare groups
+        counts = summary_df["stratify_key"].value_counts()
+        rare = counts[counts <= 5].index
+        summary_df["stratify_key"] = summary_df["stratify_key"].replace(rare, "RARE")
+
+        # USE stratify_key
         train_df, temp_df = train_test_split(
-            # summary, test_size=0.2, stratify=summary["Cluster_Group"], random_state=42
-            summary_df, test_size=0.2, stratify=summary_df["Classification"], random_state=42
+            summary_df,
+            test_size=0.2,
+            stratify=summary_df["stratify_key"],
+            random_state=42
         )
-        
+
         val_df, test_df = train_test_split(
-            temp_df, test_size=0.5, stratify=temp_df["Classification"], random_state=42
+            temp_df,
+            test_size=0.5,
+            stratify=temp_df["stratify_key"],
+            random_state=42
         )
+
+        # Optional: drop helper column
+        train_df = train_df.drop(columns=["stratify_key"])
+        val_df = val_df.drop(columns=["stratify_key"])
+        test_df = test_df.drop(columns=["stratify_key"])
         
+        print("TRAIN\n", train_df.value_counts(["Classification", "Confusant"]))
+        print("VAL\n", val_df.value_counts(["Classification", "Confusant"]))
+        print("TEST\n", test_df.value_counts(["Classification", "Confusant"]))
+        
+        # Save
         train_df.to_csv('results/train_df_summary.csv', index=False)
         val_df.to_csv('results/val_df_summary.csv', index=False)
         test_df.to_csv('results/test_df_summary.csv', index=False)      
@@ -310,6 +358,7 @@ class Utils:
     def helper_os_walk(file_path=StaticVariable.data_path):
         for root, _, files in os.walk(file_path):
             for file in files:
+                # print(file)
                 format = os.path.splitext(file)[1]
                 if StaticVariable.is_supported(format):
                     image_path = os.path.join(root, file)
@@ -341,14 +390,20 @@ class Utils:
         t_labels = thyrocyte_labels[thyrocyte_mask].tolist()
         return t_bboxes, t_labels, c_bboxes, c_labels
     
-    def get_specified_label_bboxes(thyrocyte_bboxes, thyrocyte_labels, cluster_bboxes, cluster_labels, specified_label):
+    def get_specified_label_bboxes(thyrocyte_bboxes, thyrocyte_labels, cluster_bboxes, cluster_labels, 
+                                   confusant_bboxes, confusant_labels, specified_label):
         if specified_label == "Thyrocyte":
             return thyrocyte_bboxes, thyrocyte_labels
         elif specified_label == "Cluster":
             return cluster_bboxes, cluster_labels
-        elif specified_label == "Both":
-            bboxes = thyrocyte_bboxes + cluster_bboxes
-            labels = thyrocyte_labels + cluster_labels
+        elif specified_label == "Confusant":
+            return confusant_bboxes, confusant_labels
+        elif specified_label == "Thyrocyte and Confusant":
+            bboxes = thyrocyte_bboxes + confusant_bboxes
+            labels = thyrocyte_labels + confusant_labels
+        elif specified_label == "All":
+            bboxes = thyrocyte_bboxes + confusant_bboxes + cluster_bboxes
+            labels = thyrocyte_labels + confusant_labels + cluster_labels
         else:
             raise ValueError("Invalid specified_label. Choose from 'Thyrocyte', 'Cluster', or 'Both'.")
         return bboxes, labels
@@ -381,14 +436,17 @@ class Utils:
                 updated_cluster_path = row['Updated_Cluster_Annotation_Path']
                 updated_thyrocyte_and_cluster_path = row['Updated_Thyrocyte_and_Cluster_Annotation_Path']
                 image_path = row['Image_Path']
-                thyrocyte_labels, thyrocyte_bboxes, cluster_labels, cluster_bboxes = Utils.get_bboxes_and_labels_from_paths(
+                confusant_path = row['Confusant_Path']
+                thyrocyte_labels, thyrocyte_bboxes, cluster_labels, cluster_bboxes, confusant_labels, confusant_bboxes = Utils.get_bboxes_and_labels_from_paths(
                     thyrocyte_path, 
                     cluster_path,
                     updated_cluster_path,
                     updated_thyrocyte_and_cluster_path,
+                    confusant_path,
                     file
                     )
                 thyrocyte_bboxes, thyrocyte_labels = Utils.filter_less_than_eight_pixels(thyrocyte_bboxes, thyrocyte_labels)
+                confusant_bboxes, confusant_labels = Utils.filter_less_than_eight_pixels(confusant_bboxes, confusant_labels)
                 
                 if np.any((np.array(thyrocyte_labels) == "Cluster") | (np.array(thyrocyte_labels) == "Clusters")):
                     warnings.warn(f"[INFO] Mislabelled clusters found in thyrocyte annotations for file: {file}. Splitting them out.")
@@ -398,7 +456,8 @@ class Utils:
                     cluster_labels += c_labels
                     
                 original_bboxes, original_labels = Utils.get_specified_label_bboxes(
-                    thyrocyte_bboxes, thyrocyte_labels, cluster_bboxes, cluster_labels, specified_label=label
+                    thyrocyte_bboxes, thyrocyte_labels, cluster_bboxes, cluster_labels, 
+                    confusant_bboxes, confusant_labels, specified_label=label
                 )
                 
                 rgb_image = Utils.get_image_data(image_path)
@@ -621,6 +680,9 @@ class Utils:
             f"{dir}/{name}",
             **save_kwargs
         )
+
+    def confusant_path_affix(file):
+        return f"{StaticVariable.main_raw_prefix}fnab/Confusant/{file}-confusant.csv" 
         
     def iter_annotation_paths():
         no_cluster_files = StaticVariable.no_cluster_files
@@ -648,6 +710,8 @@ class Utils:
                 image_path, file_name
             )
             
+            confusant_path = Utils.confusant_path_affix(file_name)
+            
             # Validate paths
             if not thyrocyte_path or not os.path.exists(thyrocyte_path):
                 thyrocyte_path = None
@@ -667,6 +731,9 @@ class Utils:
             ):
                 updated_thyrocyte_and_cluster_annotation_path = None
 
+            if not os.path.exists(confusant_path):
+                confusant_path = None
+                
             yield (
                 file,
                 thyrocyte_path,
@@ -674,6 +741,7 @@ class Utils:
                 updated_cluster_annotation_path,
                 updated_thyrocyte_and_cluster_annotation_path,
                 image_path,
+                confusant_path
             )
             
     def save_data_path_to_csv(
@@ -687,6 +755,7 @@ class Utils:
                     "Updated_Cluster_Annotation_Path": updated_cluster_annotation_path,
                     "Updated_Thyrocyte_and_Cluster_Annotation_Path": updated_thyrocyte_and_cluster_annotation_path,
                     "Image_Path": image_path,
+                    "Confusant_Path" : confusant_path
                 }
                 for (
                     file,
@@ -695,6 +764,7 @@ class Utils:
                     updated_cluster_annotation_path,
                     updated_thyrocyte_and_cluster_annotation_path,
                     image_path,
+                    confusant_path
                 )
                 in Utils.iter_annotation_paths()
             ]
@@ -707,10 +777,11 @@ class Utils:
                 "Updated_Cluster_Annotation_Path",
                 "Updated_Thyrocyte_and_Cluster_Annotation_Path",
                 "Image_Path",
+                "Confusant_Path"
             ],
         )
         df.to_csv(output_csv, index=False)
-    
+                
 class CallbackUtil:
     def __init__(self):
         self.file = None
@@ -722,65 +793,65 @@ class CallbackUtil:
         return self.file
 
 if __name__ == '__main__':
+    confusant_list = [
+        f.name.removesuffix('-confusant.csv')
+        for f in Path('datasets/raw/fnab/Confusant').iterdir()
+        if f.is_file()
+    ]
+    Utils.save_data_path_to_csv()
+    not_classified = []
     
-    for image_path, file in Utils.helper_os_walk():
-        print(image_path)
+    for dir in StaticVariable.DIR_PATH:
+        os.makedirs(dir, exist_ok=True)
+        
+    callback = CallbackUtil()
+    invalid = Utils.check_dataset()
     
-    # Utils.save_data_path_to_csv()
-    # not_classified = []
-    
-    # for dir in StaticVariable.DIR_PATH:
-    #     os.makedirs(dir, exist_ok=True)
+    for i in invalid:
+        print(f"Invalid dataset found: {i}")
         
-    # callback = CallbackUtil()
-    # invalid = Utils.check_dataset()
-    
-    # for i in invalid:
-    #     print(f"Invalid dataset found: {i}")
+    Utils.data_split_csv(invalid, confusant_list)
         
-    # Utils.data_split_csv(invalid)
+    for data_type, data in Utils.preprocess_original_image_annotations_generator(
+        invalid, 
+        Utils.preprocess_augmented_image_annotations_helper,
+        callback.set_file,
+        label="Thyrocyte and Confusant"
+    ):
+        file = callback.get_file()
+        level = Utils.get_corresponding_level(file)
+        prefix = "augmented" if data_type == "Augmented" else "original"
         
-    # for data_type, data in Utils.preprocess_original_image_annotations_generator(
-    #     invalid, 
-    #     Utils.preprocess_augmented_image_annotations_helper,
-    #     callback.set_file,
-    #     label="Thyrocyte"
-    # ):
-    #     file = callback.get_file()
-    #     level = Utils.get_corresponding_level(file)
-    #     prefix = "augmented" if data_type == "Augmented" else "original"
+        """Save Original Images or Augmented Images for Visualization"""
+        if prefix == 'original': # and level != 'LEVEL_IV' and level != 'LEVEL_V':
+            print(f"Saving visualization for {file}...")
+            Utils.saved_original_images_for_visualization(data, f"Ground_Truth_{file}", f'original_{file}')
         
-    #     # """Save Original Images or Augmented Images for Visualization"""
-    #     # if prefix == 'original': # and level != 'LEVEL_IV' and level != 'LEVEL_V':
-    #     #     # print(f"Saving visualization for {file}...")
-    #     #     Utils.saved_original_images_for_visualization(data, f"Ground_Truth_{file}", f'original_{file}')
+        """ For Original Image | Untiled Image """
+        image_path, label_path = Utils.get_corresponding_actual_path(file)
         
-    #     """ For Original Image | Untiled Image """
-    #     image_path, label_path = Utils.get_corresponding_actual_path(file)
+        """ Handle files not classified into any dataset split """
+        if image_path is None or label_path is None:
+            print(f"Skipping file {file} as it does not belong to any dataset split.")
+            not_classified.append(file)
+            continue
         
-    #     """ Handle files not classified into any dataset split """
-    #     if image_path is None or label_path is None:
-    #         print(f"Skipping file {file} as it does not belong to any dataset split.")
-    #         not_classified.append(file)
-    #         continue
+        # Utils.save_data(data, image_path, label_path, prefix, file, level)
         
-    #     # Utils.save_data(data, image_path, label_path, prefix, file, level)
-        
-    #     # if level in ['LEVEL_I', 'LEVEL_II','LEVEL_III']:
-    #     """ Tiling """
-    #     # image_path, label_path = Utils.get_corresponding_tiled_path(file)
-    #     for tile_data, tile_id in Utils.process_tile_generator(data, prefix):
-    #         file_tile = file.replace(".", f"_{tile_id}.") 
-    #         Utils.save_data(tile_data, image_path, label_path, prefix, file_tile, level)
+        # if level in ['LEVEL_I', 'LEVEL_II','LEVEL_III']:
+        """ Tiling """
+        # image_path, label_path = Utils.get_corresponding_tiled_path(file)
+        for tile_data, tile_id in Utils.process_tile_generator(data, prefix):
+            file_tile = file.replace(".", f"_{tile_id}.") 
+            Utils.save_data(tile_data, image_path, label_path, prefix, file_tile, level)
             
-    #         # Utils.saved_original_images_for_visualization(tile_data, f"{level}_{prefix}_{file_tile}")
-    #         # Utils.saved_original_images_for_visualization(tile_data, level , f"{prefix}_{file_tile}")
-    #         break
+            # Utils.saved_original_images_for_visualization(tile_data, f"{level}_{prefix}_{file_tile}")
+            # Utils.saved_original_images_for_visualization(tile_data, level , f"{prefix}_{file_tile}")
         
-    # print("Errors found in files: ")
-    # sorted_errors = sorted(ERROR)
-    # print(sorted_errors)
+    print("Errors found in files: ")
+    sorted_errors = sorted(ERROR)
+    print(sorted_errors)
     
-    # print("Files not classified into any dataset split:")
-    # not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
-    # not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)
+    print("Files not classified into any dataset split:")
+    not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
+    not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)
