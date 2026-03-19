@@ -11,7 +11,14 @@ import shutil
 from PIL import Image, ImageDraw
 import warnings
 from pathlib import Path
+import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+
+logger = logging.getLogger(__name__)
 ERROR = set()
 
 class Utils:
@@ -821,11 +828,11 @@ if __name__ == '__main__':
         file = callback.get_file()
         level = Utils.get_corresponding_level(file)
         prefix = "augmented" if data_type == "Augmented" else "original"
-        
-        """Save Original Images or Augmented Images for Visualization"""
-        if prefix == 'original': # and level != 'LEVEL_IV' and level != 'LEVEL_V':
-            print(f"Saving visualization for {file}...")
-            Utils.saved_original_images_for_visualization(data, f"Ground_Truth_{file}", f'original_{file}')
+        logger.info(f"Processing {file}")
+        # """Save Original Images or Augmented Images for Visualization"""
+        # if prefix == 'original': # and level != 'LEVEL_IV' and level != 'LEVEL_V':
+        #     print(f"Saving visualization for {file}...")
+        #     Utils.saved_original_images_for_visualization(data, f"Ground_Truth_{file}", f'original_{file}')
         
         """ For Original Image | Untiled Image """
         image_path, label_path = Utils.get_corresponding_actual_path(file)
@@ -836,8 +843,9 @@ if __name__ == '__main__':
             not_classified.append(file)
             continue
         
-        # Utils.save_data(data, image_path, label_path, prefix, file, level)
+        Utils.save_data(data, image_path, label_path, prefix, file, level)
         
+        image_path, label_path = Utils.get_corresponding_tiled_path(file)
         # if level in ['LEVEL_I', 'LEVEL_II','LEVEL_III']:
         """ Tiling """
         # image_path, label_path = Utils.get_corresponding_tiled_path(file)
@@ -848,10 +856,10 @@ if __name__ == '__main__':
             # Utils.saved_original_images_for_visualization(tile_data, f"{level}_{prefix}_{file_tile}")
             # Utils.saved_original_images_for_visualization(tile_data, level , f"{prefix}_{file_tile}")
         
-    print("Errors found in files: ")
-    sorted_errors = sorted(ERROR)
-    print(sorted_errors)
+    # print("Errors found in files: ")
+    # sorted_errors = sorted(ERROR)
+    # print(sorted_errors)
     
-    print("Files not classified into any dataset split:")
-    not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
-    not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)
+    # print("Files not classified into any dataset split:")
+    # not_classified_df = pd.DataFrame(not_classified, columns=['Not Classified'])
+    # not_classified_df.to_csv('/workspace/Special_Problem/not_classified_df.csv', index=False)

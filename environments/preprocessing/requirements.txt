@@ -1,3 +1,6 @@
 albumentations==2.0.8
+opencv-python
+pillow
+numpy
 openpyxl
 scikit-learn

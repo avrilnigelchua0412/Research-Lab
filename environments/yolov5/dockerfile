@@ -15,9 +15,6 @@ RUN apt-get update && apt-get install -y \
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-COPY environments/base_requirements.txt .
-RUN pip install --no-cache-dir -r base_requirements.txt
-
 COPY environments/yolov5/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
