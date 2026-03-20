@@ -7,36 +7,39 @@ services:
     gpus: all
     shm_size: "28gb"
     volumes:
+      - ./models/yolov5:/workspace/models/yolov5
       - ./tools:/workspace/tools
-      - ./environments:/workspace/environments
       - ./datasets/processed:/workspace/processed # READ ONLY
       - ./results:/workspace/results
     command: sleep infinity
     environment:
     - PYTHONUNBUFFERED=1
   yolov7:
-    build: ./environments/yolov7
+    build:
+      context: .
+      dockerfile: environments/yolov7/dockerfile
     container_name: yolov7-env
     gpus: all
     shm_size: "28gb"
     volumes:
+      - ./models/yolov7:/workspace/models/yolov7
       - ./tools:/workspace/tools
-      - ./environments:/workspace/environments
       - ./datasets/processed:/workspace/processed # READ ONLY
       - ./results:/workspace/results
     command: sleep infinity    
     environment:
     - PYTHONUNBUFFERED=1
   preprocessing:
-    build: environments/preprocessing/dockerfile
+    build:
+      context: .
+      dockerfile: environments/preprocessing/dockerfile
     container_name: preprocessing
     shm_size: "8gb"
     volumes:
       - ./tools:/workspace/tools
-      - ./environments:/workspace/environments
       - ./results:/workspace/results
       - ./datasets/raw:/workspace/raw # READ ONLY
-      # - ./datasets/processed:/workspace/processed # WRITE ONLY
+      - ./datasets/processed:/workspace/processed # AUTO WRITES
     command: sleep infinity  
     environment:
     - PYTHONUNBUFFERED=1

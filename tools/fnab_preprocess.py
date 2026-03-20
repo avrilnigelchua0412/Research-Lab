@@ -802,7 +802,7 @@ class CallbackUtil:
 if __name__ == '__main__':
     confusant_list = [
         f.name.removesuffix('-confusant.csv')
-        for f in Path('datasets/raw/fnab/Confusant').iterdir()
+        for f in Path('raw/fnab/Confusant').iterdir()
         if f.is_file()
     ]
     Utils.save_data_path_to_csv()

@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 class StaticVariable:
-    main_raw_prefix = 'datasets/raw/'
+    main_raw_prefix = 'raw/'
     levels = pd.read_excel(f'{main_raw_prefix}fnab/FNAB ANNOTATIONS.xlsx', sheet_name='Classification')
     no_cluster_files = pd.read_excel(f'{main_raw_prefix}fnab/FNAB ANNOTATIONS.xlsx', sheet_name='Reannotations')
     summarized_levels = pd.read_csv('results/dataset_summary.csv') if os.path.exists('results/dataset_summary.csv') else None
@@ -39,7 +39,7 @@ class StaticVariable:
     val_list   = load_file_list('results/val_df_summary.csv')
     test_list  = load_file_list('results/test_df_summary.csv')
     
-    prefix = "datasets/processed/fnab/yolo_dataset_version_"
+    prefix = "processed/fnab/yolo_dataset_version_"
     
     tile_train_image_path = f"{prefix}2/images/train/"
     tile_train_label_path = f"{prefix}2/labels/train/"
