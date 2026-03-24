@@ -8,7 +8,7 @@ services:
     shm_size: "28gb"
     volumes:
       - ./models/yolov5:/workspace/models/yolov5
-      - ./tools:/workspace/tools
+      - ./tools/objectdetection_script:/workspace/models/yolov5/objectdetection_script
       - ./datasets/processed:/workspace/processed # READ ONLY
       - ./results:/workspace/results
     command: sleep infinity
@@ -23,7 +23,7 @@ services:
     shm_size: "28gb"
     volumes:
       - ./models/yolov7:/workspace/models/yolov7
-      - ./tools:/workspace/tools
+      - ./tools/objectdetection_script:/workspace/models/yolov7/objectdetection_script
       - ./datasets/processed:/workspace/processed # READ ONLY
       - ./results:/workspace/results
     command: sleep infinity    
