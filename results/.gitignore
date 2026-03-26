@@ -1,1 +1,5 @@
 test_data_for_validation/
+cl_yolov7tiny_heatmap_result/
+cl_yolov5nano_heatmap_result/
+baseline_yolov7tiny_heatmap_result/
+baseline_yolov5nano_heatmap_result/

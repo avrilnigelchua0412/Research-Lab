@@ -1,4 +1,8 @@
 # Usage: pip install -r requirements.txt
+
+# Research ----------------------------------------
+grad-cam
+
 # Export ----------------------------------------
 onnx==1.12.0
 onnxruntime==1.15.1
