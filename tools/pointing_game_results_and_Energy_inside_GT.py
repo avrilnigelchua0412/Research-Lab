@@ -4,7 +4,8 @@ from scipy.stats import spearmanr
 EVAL_REGIMES = {
     'Levels 1–3': ['LEVEL_I', 'LEVEL_II', 'LEVEL_III'],
     'Levels 1–4': ['LEVEL_I', 'LEVEL_II', 'LEVEL_III', 'LEVEL_IV'],
-    'Level 4 only': ['LEVEL_IV']
+    'Level 4 only': ['LEVEL_IV'],
+    'Level 5 only': ['LEVEL_V']
 }
 
 def summarize_energy(df):
