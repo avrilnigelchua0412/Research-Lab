@@ -88,6 +88,276 @@ Pointing BG: 0.415
 STD Energy Thy: 0.000
 STD Energy Conf: 0.120
 --------------------------------------------------
+Baseline YOLOv5nano | Levels 1–4 | Thy Only | P3
+Mean Energy Thy: 0.454
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.614
+Pointing Conf: 0.000
+Pointing BG: 0.386
+STD Energy Thy: 0.345
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv5nano | Levels 1–4 | Mixed | P3
+Mean Energy Thy: 0.330
+Mean Energy Conf: 0.144
+Focus Ratio: 0.696
+Pointing Thy: 0.426
+Pointing Conf: 0.293
+Pointing BG: 0.282
+STD Energy Thy: 0.366
+STD Energy Conf: 0.249
+--------------------------------------------------
+Baseline YOLOv5nano | Levels 1–4 | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.196
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.813
+Pointing BG: 0.187
+STD Energy Thy: 0.000
+STD Energy Conf: 0.170
+--------------------------------------------------
+Baseline YOLOv5nano | Levels 1–4 | Thy Only | P4
+Mean Energy Thy: 0.451
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.723
+Pointing Conf: 0.000
+Pointing BG: 0.277
+STD Energy Thy: 0.335
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv5nano | Levels 1–4 | Mixed | P4
+Mean Energy Thy: 0.343
+Mean Energy Conf: 0.088
+Focus Ratio: 0.795
+Pointing Thy: 0.571
+Pointing Conf: 0.239
+Pointing BG: 0.189
+STD Energy Thy: 0.335
+STD Energy Conf: 0.122
+--------------------------------------------------
+Baseline YOLOv5nano | Levels 1–4 | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.135
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.610
+Pointing BG: 0.390
+STD Energy Thy: 0.000
+STD Energy Conf: 0.120
+--------------------------------------------------
+Baseline YOLOv5nano | Levels 1–4 | Thy Only | P5
+Mean Energy Thy: 0.517
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.753
+Pointing Conf: 0.000
+Pointing BG: 0.247
+STD Energy Thy: 0.328
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv5nano | Levels 1–4 | Mixed | P5
+Mean Energy Thy: 0.423
+Mean Energy Conf: 0.096
+Focus Ratio: 0.815
+Pointing Thy: 0.574
+Pointing Conf: 0.231
+Pointing BG: 0.194
+STD Energy Thy: 0.370
+STD Energy Conf: 0.136
+--------------------------------------------------
+Baseline YOLOv5nano | Levels 1–4 | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.134
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.538
+Pointing BG: 0.462
+STD Energy Thy: 0.000
+STD Energy Conf: 0.120
+--------------------------------------------------
+Baseline YOLOv5nano | Level 4 only | Thy Only | P3
+Mean Energy Thy: 0.487
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.664
+Pointing Conf: 0.000
+Pointing BG: 0.336
+STD Energy Thy: 0.336
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv5nano | Level 4 only | Mixed | P3
+Mean Energy Thy: 0.440
+Mean Energy Conf: 0.084
+Focus Ratio: 0.839
+Pointing Thy: 0.552
+Pointing Conf: 0.152
+Pointing BG: 0.295
+STD Energy Thy: 0.373
+STD Energy Conf: 0.175
+--------------------------------------------------
+Baseline YOLOv5nano | Level 4 only | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.150
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.578
+Pointing BG: 0.422
+STD Energy Thy: 0.000
+STD Energy Conf: 0.149
+--------------------------------------------------
+Baseline YOLOv5nano | Level 4 only | Thy Only | P4
+Mean Energy Thy: 0.497
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.776
+Pointing Conf: 0.000
+Pointing BG: 0.224
+STD Energy Thy: 0.325
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv5nano | Level 4 only | Mixed | P4
+Mean Energy Thy: 0.441
+Mean Energy Conf: 0.087
+Focus Ratio: 0.836
+Pointing Thy: 0.676
+Pointing Conf: 0.110
+Pointing BG: 0.214
+STD Energy Thy: 0.340
+STD Energy Conf: 0.132
+--------------------------------------------------
+Baseline YOLOv5nano | Level 4 only | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.110
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.414
+Pointing BG: 0.586
+STD Energy Thy: 0.000
+STD Energy Conf: 0.116
+--------------------------------------------------
+Baseline YOLOv5nano | Level 4 only | Thy Only | P5
+Mean Energy Thy: 0.544
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.768
+Pointing Conf: 0.000
+Pointing BG: 0.232
+STD Energy Thy: 0.322
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv5nano | Level 4 only | Mixed | P5
+Mean Energy Thy: 0.480
+Mean Energy Conf: 0.095
+Focus Ratio: 0.834
+Pointing Thy: 0.633
+Pointing Conf: 0.157
+Pointing BG: 0.210
+STD Energy Thy: 0.367
+STD Energy Conf: 0.151
+--------------------------------------------------
+Baseline YOLOv5nano | Level 4 only | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.108
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.371
+Pointing BG: 0.629
+STD Energy Thy: 0.000
+STD Energy Conf: 0.116
+--------------------------------------------------
+Baseline YOLOv5nano | Level 5 only | Thy Only | P3
+Mean Energy Thy: 0.274
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.507
+Pointing Conf: 0.000
+Pointing BG: 0.493
+STD Energy Thy: 0.210
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv5nano | Level 5 only | Mixed | P3
+Mean Energy Thy: 0.293
+Mean Energy Conf: 0.095
+Focus Ratio: 0.756
+Pointing Thy: 0.475
+Pointing Conf: 0.169
+Pointing BG: 0.356
+STD Energy Thy: 0.301
+STD Energy Conf: 0.197
+--------------------------------------------------
+Baseline YOLOv5nano | Level 5 only | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.190
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.779
+Pointing BG: 0.221
+STD Energy Thy: 0.000
+STD Energy Conf: 0.188
+--------------------------------------------------
+Baseline YOLOv5nano | Level 5 only | Thy Only | P4
+Mean Energy Thy: 0.282
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.593
+Pointing Conf: 0.000
+Pointing BG: 0.407
+STD Energy Thy: 0.211
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv5nano | Level 5 only | Mixed | P4
+Mean Energy Thy: 0.290
+Mean Energy Conf: 0.059
+Focus Ratio: 0.831
+Pointing Thy: 0.554
+Pointing Conf: 0.124
+Pointing BG: 0.322
+STD Energy Thy: 0.263
+STD Energy Conf: 0.084
+--------------------------------------------------
+Baseline YOLOv5nano | Level 5 only | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.112
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.461
+Pointing BG: 0.539
+STD Energy Thy: 0.000
+STD Energy Conf: 0.095
+--------------------------------------------------
+Baseline YOLOv5nano | Level 5 only | Thy Only | P5
+Mean Energy Thy: 0.298
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.553
+Pointing Conf: 0.000
+Pointing BG: 0.447
+STD Energy Thy: 0.222
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv5nano | Level 5 only | Mixed | P5
+Mean Energy Thy: 0.335
+Mean Energy Conf: 0.062
+Focus Ratio: 0.844
+Pointing Thy: 0.514
+Pointing Conf: 0.147
+Pointing BG: 0.339
+STD Energy Thy: 0.298
+STD Energy Conf: 0.091
+--------------------------------------------------
+Baseline YOLOv5nano | Level 5 only | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.110
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.396
+Pointing BG: 0.604
+STD Energy Thy: 0.000
+STD Energy Conf: 0.094
+--------------------------------------------------
 CL YOLOv5nano | Levels 1–3 | Thy Only | P3
 Mean Energy Thy: 0.239
 Mean Energy Conf: 0.000
@@ -177,6 +447,276 @@ Pointing Conf: 0.510
 Pointing BG: 0.490
 STD Energy Thy: 0.000
 STD Energy Conf: 0.118
+--------------------------------------------------
+CL YOLOv5nano | Levels 1–4 | Thy Only | P3
+Mean Energy Thy: 0.342
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.500
+Pointing Conf: 0.000
+Pointing BG: 0.500
+STD Energy Thy: 0.300
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv5nano | Levels 1–4 | Mixed | P3
+Mean Energy Thy: 0.215
+Mean Energy Conf: 0.051
+Focus Ratio: 0.807
+Pointing Thy: 0.290
+Pointing Conf: 0.044
+Pointing BG: 0.667
+STD Energy Thy: 0.252
+STD Energy Conf: 0.081
+--------------------------------------------------
+CL YOLOv5nano | Levels 1–4 | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.104
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.222
+Pointing BG: 0.778
+STD Energy Thy: 0.000
+STD Energy Conf: 0.086
+--------------------------------------------------
+CL YOLOv5nano | Levels 1–4 | Thy Only | P4
+Mean Energy Thy: 0.462
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.675
+Pointing Conf: 0.000
+Pointing BG: 0.325
+STD Energy Thy: 0.351
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv5nano | Levels 1–4 | Mixed | P4
+Mean Energy Thy: 0.353
+Mean Energy Conf: 0.081
+Focus Ratio: 0.813
+Pointing Thy: 0.547
+Pointing Conf: 0.146
+Pointing BG: 0.307
+STD Energy Thy: 0.351
+STD Energy Conf: 0.119
+--------------------------------------------------
+CL YOLOv5nano | Levels 1–4 | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.126
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.438
+Pointing BG: 0.562
+STD Energy Thy: 0.000
+STD Energy Conf: 0.116
+--------------------------------------------------
+CL YOLOv5nano | Levels 1–4 | Thy Only | P5
+Mean Energy Thy: 0.520
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.705
+Pointing Conf: 0.000
+Pointing BG: 0.295
+STD Energy Thy: 0.342
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv5nano | Levels 1–4 | Mixed | P5
+Mean Energy Thy: 0.427
+Mean Energy Conf: 0.093
+Focus Ratio: 0.821
+Pointing Thy: 0.581
+Pointing Conf: 0.233
+Pointing BG: 0.186
+STD Energy Thy: 0.373
+STD Energy Conf: 0.137
+--------------------------------------------------
+CL YOLOv5nano | Levels 1–4 | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.129
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.479
+Pointing BG: 0.521
+STD Energy Thy: 0.000
+STD Energy Conf: 0.118
+--------------------------------------------------
+CL YOLOv5nano | Level 4 only | Thy Only | P3
+Mean Energy Thy: 0.376
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.528
+Pointing Conf: 0.000
+Pointing BG: 0.472
+STD Energy Thy: 0.296
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv5nano | Level 4 only | Mixed | P3
+Mean Energy Thy: 0.303
+Mean Energy Conf: 0.064
+Focus Ratio: 0.825
+Pointing Thy: 0.390
+Pointing Conf: 0.033
+Pointing BG: 0.576
+STD Energy Thy: 0.274
+STD Energy Conf: 0.106
+--------------------------------------------------
+CL YOLOv5nano | Level 4 only | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.083
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.135
+Pointing BG: 0.865
+STD Energy Thy: 0.000
+STD Energy Conf: 0.086
+--------------------------------------------------
+CL YOLOv5nano | Level 4 only | Thy Only | P4
+Mean Energy Thy: 0.513
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.728
+Pointing Conf: 0.000
+Pointing BG: 0.272
+STD Energy Thy: 0.336
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv5nano | Level 4 only | Mixed | P4
+Mean Energy Thy: 0.453
+Mean Energy Conf: 0.082
+Focus Ratio: 0.846
+Pointing Thy: 0.648
+Pointing Conf: 0.086
+Pointing BG: 0.267
+STD Energy Thy: 0.355
+STD Energy Conf: 0.133
+--------------------------------------------------
+CL YOLOv5nano | Level 4 only | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.101
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.311
+Pointing BG: 0.689
+STD Energy Thy: 0.000
+STD Energy Conf: 0.111
+--------------------------------------------------
+CL YOLOv5nano | Level 4 only | Thy Only | P5
+Mean Energy Thy: 0.555
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.712
+Pointing Conf: 0.000
+Pointing BG: 0.288
+STD Energy Thy: 0.333
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv5nano | Level 4 only | Mixed | P5
+Mean Energy Thy: 0.465
+Mean Energy Conf: 0.101
+Focus Ratio: 0.822
+Pointing Thy: 0.610
+Pointing Conf: 0.181
+Pointing BG: 0.210
+STD Energy Thy: 0.376
+STD Energy Conf: 0.157
+--------------------------------------------------
+CL YOLOv5nano | Level 4 only | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.106
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.367
+Pointing BG: 0.633
+STD Energy Thy: 0.000
+STD Energy Conf: 0.119
+--------------------------------------------------
+CL YOLOv5nano | Level 5 only | Thy Only | P3
+Mean Energy Thy: 0.211
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.440
+Pointing Conf: 0.000
+Pointing BG: 0.560
+STD Energy Thy: 0.183
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv5nano | Level 5 only | Mixed | P3
+Mean Energy Thy: 0.195
+Mean Energy Conf: 0.043
+Focus Ratio: 0.819
+Pointing Thy: 0.316
+Pointing Conf: 0.023
+Pointing BG: 0.661
+STD Energy Thy: 0.200
+STD Energy Conf: 0.072
+--------------------------------------------------
+CL YOLOv5nano | Level 5 only | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.113
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.299
+Pointing BG: 0.701
+STD Energy Thy: 0.000
+STD Energy Conf: 0.111
+--------------------------------------------------
+CL YOLOv5nano | Level 5 only | Thy Only | P4
+Mean Energy Thy: 0.276
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.560
+Pointing Conf: 0.000
+Pointing BG: 0.440
+STD Energy Thy: 0.221
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv5nano | Level 5 only | Mixed | P4
+Mean Energy Thy: 0.295
+Mean Energy Conf: 0.050
+Focus Ratio: 0.855
+Pointing Thy: 0.542
+Pointing Conf: 0.073
+Pointing BG: 0.384
+STD Energy Thy: 0.270
+STD Energy Conf: 0.071
+--------------------------------------------------
+CL YOLOv5nano | Level 5 only | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.097
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.383
+Pointing BG: 0.617
+STD Energy Thy: 0.000
+STD Energy Conf: 0.082
+--------------------------------------------------
+CL YOLOv5nano | Level 5 only | Thy Only | P5
+Mean Energy Thy: 0.299
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.487
+Pointing Conf: 0.000
+Pointing BG: 0.513
+STD Energy Thy: 0.228
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv5nano | Level 5 only | Mixed | P5
+Mean Energy Thy: 0.343
+Mean Energy Conf: 0.058
+Focus Ratio: 0.856
+Pointing Thy: 0.548
+Pointing Conf: 0.124
+Pointing BG: 0.328
+STD Energy Thy: 0.298
+STD Energy Conf: 0.087
+--------------------------------------------------
+CL YOLOv5nano | Level 5 only | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.104
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.403
+Pointing BG: 0.597
+STD Energy Thy: 0.000
+STD Energy Conf: 0.089
 --------------------------------------------------
 Baseline YOLOv7tiny | Levels 1–3 | Thy Only | P3
 Mean Energy Thy: 0.239
@@ -268,6 +808,276 @@ Pointing BG: 0.864
 STD Energy Thy: 0.000
 STD Energy Conf: 0.114
 --------------------------------------------------
+Baseline YOLOv7tiny | Levels 1–4 | Thy Only | P3
+Mean Energy Thy: 0.373
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.590
+Pointing Conf: 0.000
+Pointing BG: 0.410
+STD Energy Thy: 0.320
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv7tiny | Levels 1–4 | Mixed | P3
+Mean Energy Thy: 0.267
+Mean Energy Conf: 0.104
+Focus Ratio: 0.720
+Pointing Thy: 0.435
+Pointing Conf: 0.188
+Pointing BG: 0.377
+STD Energy Thy: 0.306
+STD Energy Conf: 0.132
+--------------------------------------------------
+Baseline YOLOv7tiny | Levels 1–4 | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.107
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.220
+Pointing BG: 0.780
+STD Energy Thy: 0.000
+STD Energy Conf: 0.107
+--------------------------------------------------
+Baseline YOLOv7tiny | Levels 1–4 | Thy Only | P4
+Mean Energy Thy: 0.439
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.651
+Pointing Conf: 0.000
+Pointing BG: 0.349
+STD Energy Thy: 0.352
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv7tiny | Levels 1–4 | Mixed | P4
+Mean Energy Thy: 0.302
+Mean Energy Conf: 0.110
+Focus Ratio: 0.733
+Pointing Thy: 0.432
+Pointing Conf: 0.220
+Pointing BG: 0.348
+STD Energy Thy: 0.357
+STD Energy Conf: 0.135
+--------------------------------------------------
+Baseline YOLOv7tiny | Levels 1–4 | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.112
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.214
+Pointing BG: 0.786
+STD Energy Thy: 0.000
+STD Energy Conf: 0.111
+--------------------------------------------------
+Baseline YOLOv7tiny | Levels 1–4 | Thy Only | P5
+Mean Energy Thy: 0.420
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.560
+Pointing Conf: 0.000
+Pointing BG: 0.440
+STD Energy Thy: 0.346
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv7tiny | Levels 1–4 | Mixed | P5
+Mean Energy Thy: 0.292
+Mean Energy Conf: 0.115
+Focus Ratio: 0.717
+Pointing Thy: 0.366
+Pointing Conf: 0.176
+Pointing BG: 0.458
+STD Energy Thy: 0.355
+STD Energy Conf: 0.136
+--------------------------------------------------
+Baseline YOLOv7tiny | Levels 1–4 | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.120
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.133
+Pointing BG: 0.867
+STD Energy Thy: 0.000
+STD Energy Conf: 0.113
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 4 only | Thy Only | P3
+Mean Energy Thy: 0.417
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.624
+Pointing Conf: 0.000
+Pointing BG: 0.376
+STD Energy Thy: 0.310
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 4 only | Mixed | P3
+Mean Energy Thy: 0.376
+Mean Energy Conf: 0.098
+Focus Ratio: 0.793
+Pointing Thy: 0.586
+Pointing Conf: 0.071
+Pointing BG: 0.343
+STD Energy Thy: 0.323
+STD Energy Conf: 0.146
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 4 only | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.084
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.124
+Pointing BG: 0.876
+STD Energy Thy: 0.000
+STD Energy Conf: 0.099
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 4 only | Thy Only | P4
+Mean Energy Thy: 0.484
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.704
+Pointing Conf: 0.000
+Pointing BG: 0.296
+STD Energy Thy: 0.343
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 4 only | Mixed | P4
+Mean Energy Thy: 0.397
+Mean Energy Conf: 0.102
+Focus Ratio: 0.795
+Pointing Thy: 0.552
+Pointing Conf: 0.114
+Pointing BG: 0.333
+STD Energy Thy: 0.365
+STD Energy Conf: 0.143
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 4 only | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.091
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.147
+Pointing BG: 0.853
+STD Energy Thy: 0.000
+STD Energy Conf: 0.106
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 4 only | Thy Only | P5
+Mean Energy Thy: 0.456
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.608
+Pointing Conf: 0.000
+Pointing BG: 0.392
+STD Energy Thy: 0.336
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 4 only | Mixed | P5
+Mean Energy Thy: 0.361
+Mean Energy Conf: 0.113
+Focus Ratio: 0.761
+Pointing Thy: 0.443
+Pointing Conf: 0.129
+Pointing BG: 0.429
+STD Energy Thy: 0.366
+STD Energy Conf: 0.147
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 4 only | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.099
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.124
+Pointing BG: 0.876
+STD Energy Thy: 0.000
+STD Energy Conf: 0.110
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 5 only | Thy Only | P3
+Mean Energy Thy: 0.232
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.533
+Pointing Conf: 0.000
+Pointing BG: 0.467
+STD Energy Thy: 0.187
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 5 only | Mixed | P3
+Mean Energy Thy: 0.255
+Mean Energy Conf: 0.057
+Focus Ratio: 0.816
+Pointing Thy: 0.480
+Pointing Conf: 0.051
+Pointing BG: 0.469
+STD Energy Thy: 0.238
+STD Energy Conf: 0.080
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 5 only | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.077
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.130
+Pointing BG: 0.870
+STD Energy Thy: 0.000
+STD Energy Conf: 0.078
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 5 only | Thy Only | P4
+Mean Energy Thy: 0.273
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.540
+Pointing Conf: 0.000
+Pointing BG: 0.460
+STD Energy Thy: 0.209
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 5 only | Mixed | P4
+Mean Energy Thy: 0.289
+Mean Energy Conf: 0.063
+Focus Ratio: 0.821
+Pointing Thy: 0.537
+Pointing Conf: 0.113
+Pointing BG: 0.350
+STD Energy Thy: 0.280
+STD Energy Conf: 0.091
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 5 only | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.085
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.201
+Pointing BG: 0.799
+STD Energy Thy: 0.000
+STD Energy Conf: 0.085
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 5 only | Thy Only | P5
+Mean Energy Thy: 0.261
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.313
+Pointing Conf: 0.000
+Pointing BG: 0.687
+STD Energy Thy: 0.213
+STD Energy Conf: 0.000
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 5 only | Mixed | P5
+Mean Energy Thy: 0.273
+Mean Energy Conf: 0.072
+Focus Ratio: 0.792
+Pointing Thy: 0.367
+Pointing Conf: 0.085
+Pointing BG: 0.548
+STD Energy Thy: 0.284
+STD Energy Conf: 0.094
+--------------------------------------------------
+Baseline YOLOv7tiny | Level 5 only | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.099
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.117
+Pointing BG: 0.883
+STD Energy Thy: 0.000
+STD Energy Conf: 0.089
+--------------------------------------------------
 CL YOLOv7tiny | Levels 1–3 | Thy Only | P3
 Mean Energy Thy: 0.243
 Mean Energy Conf: 0.000
@@ -357,4 +1167,274 @@ Pointing Conf: 0.171
 Pointing BG: 0.829
 STD Energy Thy: 0.000
 STD Energy Conf: 0.112
+--------------------------------------------------
+CL YOLOv7tiny | Levels 1–4 | Thy Only | P3
+Mean Energy Thy: 0.391
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.566
+Pointing Conf: 0.000
+Pointing BG: 0.434
+STD Energy Thy: 0.331
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv7tiny | Levels 1–4 | Mixed | P3
+Mean Energy Thy: 0.296
+Mean Energy Conf: 0.097
+Focus Ratio: 0.753
+Pointing Thy: 0.463
+Pointing Conf: 0.165
+Pointing BG: 0.372
+STD Energy Thy: 0.327
+STD Energy Conf: 0.127
+--------------------------------------------------
+CL YOLOv7tiny | Levels 1–4 | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.101
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.202
+Pointing BG: 0.798
+STD Energy Thy: 0.000
+STD Energy Conf: 0.104
+--------------------------------------------------
+CL YOLOv7tiny | Levels 1–4 | Thy Only | P4
+Mean Energy Thy: 0.474
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.681
+Pointing Conf: 0.000
+Pointing BG: 0.319
+STD Energy Thy: 0.359
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv7tiny | Levels 1–4 | Mixed | P4
+Mean Energy Thy: 0.329
+Mean Energy Conf: 0.098
+Focus Ratio: 0.770
+Pointing Thy: 0.460
+Pointing Conf: 0.149
+Pointing BG: 0.392
+STD Energy Thy: 0.378
+STD Energy Conf: 0.126
+--------------------------------------------------
+CL YOLOv7tiny | Levels 1–4 | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.097
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.144
+Pointing BG: 0.856
+STD Energy Thy: 0.000
+STD Energy Conf: 0.106
+--------------------------------------------------
+CL YOLOv7tiny | Levels 1–4 | Thy Only | P5
+Mean Energy Thy: 0.425
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.560
+Pointing Conf: 0.000
+Pointing BG: 0.440
+STD Energy Thy: 0.349
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv7tiny | Levels 1–4 | Mixed | P5
+Mean Energy Thy: 0.306
+Mean Energy Conf: 0.108
+Focus Ratio: 0.739
+Pointing Thy: 0.392
+Pointing Conf: 0.180
+Pointing BG: 0.429
+STD Energy Thy: 0.366
+STD Energy Conf: 0.130
+--------------------------------------------------
+CL YOLOv7tiny | Levels 1–4 | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.113
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.160
+Pointing BG: 0.840
+STD Energy Thy: 0.000
+STD Energy Conf: 0.111
+--------------------------------------------------
+CL YOLOv7tiny | Level 4 only | Thy Only | P3
+Mean Energy Thy: 0.440
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.608
+Pointing Conf: 0.000
+Pointing BG: 0.392
+STD Energy Thy: 0.321
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv7tiny | Level 4 only | Mixed | P3
+Mean Energy Thy: 0.408
+Mean Energy Conf: 0.092
+Focus Ratio: 0.817
+Pointing Thy: 0.586
+Pointing Conf: 0.076
+Pointing BG: 0.338
+STD Energy Thy: 0.337
+STD Energy Conf: 0.142
+--------------------------------------------------
+CL YOLOv7tiny | Level 4 only | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.083
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.092
+Pointing BG: 0.908
+STD Energy Thy: 0.000
+STD Energy Conf: 0.104
+--------------------------------------------------
+CL YOLOv7tiny | Level 4 only | Thy Only | P4
+Mean Energy Thy: 0.526
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.744
+Pointing Conf: 0.000
+Pointing BG: 0.256
+STD Energy Thy: 0.342
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv7tiny | Level 4 only | Mixed | P4
+Mean Energy Thy: 0.430
+Mean Energy Conf: 0.099
+Focus Ratio: 0.813
+Pointing Thy: 0.590
+Pointing Conf: 0.086
+Pointing BG: 0.324
+STD Energy Thy: 0.376
+STD Energy Conf: 0.139
+--------------------------------------------------
+CL YOLOv7tiny | Level 4 only | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.080
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.088
+Pointing BG: 0.912
+STD Energy Thy: 0.000
+STD Energy Conf: 0.102
+--------------------------------------------------
+CL YOLOv7tiny | Level 4 only | Thy Only | P5
+Mean Energy Thy: 0.457
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.584
+Pointing Conf: 0.000
+Pointing BG: 0.416
+STD Energy Thy: 0.342
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv7tiny | Level 4 only | Mixed | P5
+Mean Energy Thy: 0.378
+Mean Energy Conf: 0.107
+Focus Ratio: 0.779
+Pointing Thy: 0.476
+Pointing Conf: 0.162
+Pointing BG: 0.362
+STD Energy Thy: 0.371
+STD Energy Conf: 0.141
+--------------------------------------------------
+CL YOLOv7tiny | Level 4 only | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.092
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.124
+Pointing BG: 0.876
+STD Energy Thy: 0.000
+STD Energy Conf: 0.107
+--------------------------------------------------
+CL YOLOv7tiny | Level 5 only | Thy Only | P3
+Mean Energy Thy: 0.235
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.400
+Pointing Conf: 0.000
+Pointing BG: 0.600
+STD Energy Thy: 0.199
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv7tiny | Level 5 only | Mixed | P3
+Mean Energy Thy: 0.267
+Mean Energy Conf: 0.055
+Focus Ratio: 0.831
+Pointing Thy: 0.463
+Pointing Conf: 0.045
+Pointing BG: 0.492
+STD Energy Thy: 0.250
+STD Energy Conf: 0.080
+--------------------------------------------------
+CL YOLOv7tiny | Level 5 only | Conf Only | P3
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.080
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.058
+Pointing BG: 0.942
+STD Energy Thy: 0.000
+STD Energy Conf: 0.077
+--------------------------------------------------
+CL YOLOv7tiny | Level 5 only | Thy Only | P4
+Mean Energy Thy: 0.303
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.520
+Pointing Conf: 0.000
+Pointing BG: 0.480
+STD Energy Thy: 0.225
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv7tiny | Level 5 only | Mixed | P4
+Mean Energy Thy: 0.307
+Mean Energy Conf: 0.058
+Focus Ratio: 0.841
+Pointing Thy: 0.520
+Pointing Conf: 0.085
+Pointing BG: 0.395
+STD Energy Thy: 0.291
+STD Energy Conf: 0.081
+--------------------------------------------------
+CL YOLOv7tiny | Level 5 only | Conf Only | P4
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.076
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.078
+Pointing BG: 0.922
+STD Energy Thy: 0.000
+STD Energy Conf: 0.078
+--------------------------------------------------
+CL YOLOv7tiny | Level 5 only | Thy Only | P5
+Mean Energy Thy: 0.265
+Mean Energy Conf: 0.000
+Focus Ratio: 1.000
+Pointing Thy: 0.333
+Pointing Conf: 0.000
+Pointing BG: 0.667
+STD Energy Thy: 0.223
+STD Energy Conf: 0.000
+--------------------------------------------------
+CL YOLOv7tiny | Level 5 only | Mixed | P5
+Mean Energy Thy: 0.287
+Mean Energy Conf: 0.066
+Focus Ratio: 0.812
+Pointing Thy: 0.429
+Pointing Conf: 0.090
+Pointing BG: 0.480
+STD Energy Thy: 0.292
+STD Energy Conf: 0.084
+--------------------------------------------------
+CL YOLOv7tiny | Level 5 only | Conf Only | P5
+Mean Energy Thy: 0.000
+Mean Energy Conf: 0.089
+Focus Ratio: 0.000
+Pointing Thy: 0.000
+Pointing Conf: 0.071
+Pointing BG: 0.929
+STD Energy Thy: 0.000
+STD Energy Conf: 0.082
 --------------------------------------------------
