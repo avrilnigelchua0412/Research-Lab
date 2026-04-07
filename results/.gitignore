@@ -4,3 +4,4 @@ cl_yolov5nano_heatmap_result/
 baseline_yolov7tiny_heatmap_result/
 baseline_yolov5nano_heatmap_result/
 clustering_steps/
+visualization_yolov7tiny_heatmap_result/
